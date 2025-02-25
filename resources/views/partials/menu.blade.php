@@ -16,8 +16,9 @@
             </a>
         </li>
 
+
             
-            @can('category_access')
+            <!-- @can('category_access')
                 <li class="c-sidebar-nav-item">
                     <a class="c-sidebar-nav-link {{ request()->is('admin/category') || request()->is('admin/category/*') ? 'c-active' : '' }}" href="{{ route('admin.category.index') }}">
                         <i class="fa fa-th-list c-sidebar-nav-icon icon-size">
@@ -25,10 +26,48 @@
                          Category
                     </a>
                 </li>
+            @endcan -->
+
+            @can('client_access')
+                <li class="c-sidebar-nav-item">
+                    <a class="c-sidebar-nav-link {{ request()->is('admin/client') || request()->is('admin/client/*') ? 'c-active' : '' }}" href="{{ route('admin.client.index') }}">
+                        <i class="fa fa-th-list c-sidebar-nav-icon icon-size">
+                        </i>
+                         Client
+                    </a>
+                </li>
             @endcan
 
-            
-            
+            @can('task_access')
+                <li class="c-sidebar-nav-item">
+                    <a class="c-sidebar-nav-link {{ request()->is('admin/task') || request()->is('admin/task/*') ? 'c-active' : '' }}" href="{{ route('admin.task.index') }}">
+                        <i class="fa fa-th-list c-sidebar-nav-icon icon-size">
+                        </i>
+                         Task
+                    </a>
+                </li>
+            @endcan
+
+            @can('designation_access')
+                <li class="c-sidebar-nav-item">
+                    <a class="c-sidebar-nav-link {{ request()->is('admin/category') || request()->is('admin/designation/*') ? 'c-active' : '' }}" href="{{ route('admin.designation.index') }}">
+                        <i class="fa fa-microchip c-sidebar-nav-icon icon-size">
+                        </i>
+                         Designation
+                    </a>
+                </li>
+            @endcan 
+
+            @can('company_access')
+                <li class="c-sidebar-nav-item">
+                    <a class="c-sidebar-nav-link {{ request()->is('admin/company') || request()->is('admin/company/*') ? 'c-active' : '' }}" href="{{ route('admin.company.index') }}">
+                        <i class="fa fa-delicious c-sidebar-nav-icon icon-size">
+                        </i>
+                         Company
+                    </a>
+                </li>
+            @endcan
+
         @can('user_management_access')
             <li class="c-sidebar-nav-dropdown {{ request()->is("admin/permissions*") ? "c-show" : "" }} {{ request()->is("admin/roles*") ? "c-show" : "" }} {{ request()->is("admin/users*") ? "c-show" : "" }}">
                 <a class="c-sidebar-nav-dropdown-toggle" href="#">

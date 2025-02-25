@@ -94,6 +94,70 @@ class PermissionsTableSeeder extends Seeder
                 'id'    => 21,
                 'title' => 'category_delete',
             ],
+            [
+                'id'    => 22,
+                'title' => 'designation_access',
+            ],
+            [
+                'id'    => 23,
+                'title' => 'designation_create',
+            ],
+            [
+                'id'    => 24,
+                'title' => 'designation_edit',
+            ],
+            [
+                'id'    => 25,
+                'title' => 'designation_delete',
+            ],
+            [
+                'id'    => 26,
+                'title' => 'company_access',
+            ],
+            [
+                'id'    => 27,
+                'title' => 'company_create',
+            ],
+            [
+                'id'    => 28,
+                'title' => 'company_edit',
+            ],
+            [
+                'id'    => 29,
+                'title' => 'company_delete',
+            ],
+            [
+                'id'    => 30,
+                'title' => 'client_access',
+            ],
+            [
+                'id'    => 31,
+                'title' => 'client_create',
+            ],
+            [
+                'id'    => 32,
+                'title' => 'client_edit',
+            ],
+            [
+                'id'    => 33,
+                'title' => 'client_delete',
+            ],
+            [
+                'id'    => 34,
+                'title' => 'task_access',
+            ],
+            [
+                'id'    => 35,
+                'title' => 'task_create',
+            ],
+            [
+                'id'    => 36,
+                'title' => 'task_edit',
+            ],
+            [
+                'id'    => 37,
+                'title' => 'task_delete',
+            ],
             
         ];
 
