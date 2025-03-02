@@ -2,7 +2,7 @@
 
     <div class="c-sidebar-brand d-md-down-none">
         <a class="c-sidebar-brand-full h4" href="{{ route("admin.home") }}" style="text-decoration-line: none; font-size: 1rem; /* Adjust size */font-weight: bold;text-transform: uppercase;text-shadow: 2px 2px 10px rgba(255, 138, 0, 0.4);letter-spacing: 2px;margin-bottom: 10px;">
-            Patient Management
+            Magazine Management
         </a>
     </div>
 
@@ -16,37 +16,95 @@
             </a>
         </li>
 
-
-            
-            <!-- @can('category_access')
-                <li class="c-sidebar-nav-item">
-                    <a class="c-sidebar-nav-link {{ request()->is('admin/category') || request()->is('admin/category/*') ? 'c-active' : '' }}" href="{{ route('admin.category.index') }}">
-                        <i class="fa fa-th-list c-sidebar-nav-icon icon-size">
-                        </i>
-                         Category
-                    </a>
-                </li>
-            @endcan -->
-
             @can('client_access')
                 <li class="c-sidebar-nav-item">
-                    <a class="c-sidebar-nav-link {{ request()->is('admin/client') || request()->is('admin/client/*') ? 'c-active' : '' }}" href="{{ route('admin.client.index') }}">
-                        <i class="fa fa-th-list c-sidebar-nav-icon icon-size">
+                    <a class="c-sidebar-nav-link {{ request()->is('admin/client') || request()->is('admin/client/*') || request()->is('admin/client-magazine/*') || request()->is('admin/client-data-export') ? 'c-active' : '' }}" href="{{ route('admin.client.index') }}">
+                        <i class="fa fa-user-circle c-sidebar-nav-icon icon-size">
                         </i>
                          Client
                     </a>
                 </li>
-            @endcan
+            @endcan 
+
 
             @can('task_access')
-                <li class="c-sidebar-nav-item">
-                    <a class="c-sidebar-nav-link {{ request()->is('admin/task') || request()->is('admin/task/*') ? 'c-active' : '' }}" href="{{ route('admin.task.index') }}">
-                        <i class="fa fa-th-list c-sidebar-nav-icon icon-size">
+            <li class="c-sidebar-nav-dropdown {{ request()->is("admin/task/*") ? "c-show" : "" }} {{ request()->is("admin/task*") ? "c-show" : "" }} {{ request()->is("admin/task*") ? "c-show" : "" }}">
+                <a class="c-sidebar-nav-dropdown-toggle" href="#">
+                    <i class="fa fa-th-list c-sidebar-nav-icon icon-size">
                         </i>
-                         Task
+                    Task
+                </a>
+                <ul class="c-sidebar-nav-dropdown-items">
+
+                    @can('today_task')
+                        <li class="c-sidebar-nav-item">
+                            <a href="{{ route("admin.task.today") }}" class="c-sidebar-nav-link {{ request()->is("admin/users") || request()->is("admin/users/*") ? "c-active" : "" }}">
+                                <i class="fa fa-circle-thin c-sidebar-nav-icon">
+
+                                </i>
+                                Today's Task
+                            </a>
+                        </li>
+                    @endcan
+
+                    @can('monthly_task')
+                        <li class="c-sidebar-nav-item">
+                            <a href="{{ route("admin.task.monthly") }}" class="c-sidebar-nav-link {{ request()->is("admin/task") || request()->is("admin/task/*") ? "c-active" : "" }}">
+                                <i class="fa fa-circle-thin c-sidebar-nav-icon">
+
+                                </i>
+                                Monthly Task
+                            </a>
+                        </li>
+                    @endcan
+
+                    @can('pending_task')
+                        <li class="c-sidebar-nav-item">
+                            <a href="{{ route("admin.task.pending") }}" class="c-sidebar-nav-link {{ request()->is("admin/task") || request()->is("admin/task/*") ? "c-active" : "" }}">
+                                <i class="fa fa-circle-thin c-sidebar-nav-icon">
+
+                                </i>
+                                Pending Task
+                            </a>
+                        </li>
+                    @endcan
+
+                    @can('completed_delete')
+                        <li class="c-sidebar-nav-item">
+                            <a href="{{ route("admin.tasks.completed") }}" class="c-sidebar-nav-link {{ request()->is("admin/task") || request()->is("admin/task/*") ? "c-active" : "" }}">
+                                <i class="fa fa-circle-thin c-sidebar-nav-icon">
+
+                                </i>
+                                Completed Task
+                            </a>
+                        </li>
+                    @endcan
+
+                    @can('task_access')
+                        <li class="c-sidebar-nav-item">
+                            <a href="{{ route("admin.task.index") }}" class="c-sidebar-nav-link {{ request()->is("admin/task") || request()->is("admin/task/*") ? "c-active" : "" }}">
+                                <i class="fa fa-circle-thin c-sidebar-nav-icon">
+
+                                </i>
+                                All Task
+                            </a>
+                        </li>
+                    @endcan
+
+                </ul>
+            </li>
+        @endcan
+
+        @can('notice_access')
+                <li class="c-sidebar-nav-item">
+                    <a class="c-sidebar-nav-link {{ request()->is('admin/notice') || request()->is('admin/notice/*') ? 'c-active' : '' }}" href="{{ route('admin.notice.index') }}">
+                        <i class="fa fa-sticky-note-o c-sidebar-nav-icon icon-size">
+                        </i>
+                         Notice
                     </a>
                 </li>
-            @endcan
+            @endcan 
+
 
             @can('designation_access')
                 <li class="c-sidebar-nav-item">

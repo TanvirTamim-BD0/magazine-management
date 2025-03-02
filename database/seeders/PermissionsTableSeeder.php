@@ -158,6 +158,54 @@ class PermissionsTableSeeder extends Seeder
                 'id'    => 37,
                 'title' => 'task_delete',
             ],
+            [
+                'id'    => 38,
+                'title' => 'today_task',
+            ],
+            [
+                'id'    => 39,
+                'title' => 'monthly_task',
+            ],
+            [
+                'id'    => 40,
+                'title' => 'pending_task',
+            ],
+            [
+                'id'    => 41,
+                'title' => 'completed_delete',
+            ],
+            [
+                'id'    => 42,
+                'title' => 'magazine_access',
+            ],
+            [
+                'id'    => 43,
+                'title' => 'magazine_create',
+            ],
+            [
+                'id'    => 44,
+                'title' => 'magazine_edit',
+            ],
+            [
+                'id'    => 45,
+                'title' => 'magazine_delete',
+            ],
+            [
+                'id'    => 46,
+                'title' => 'notice_access',
+            ],
+            [
+                'id'    => 47,
+                'title' => 'notice_create',
+            ],
+            [
+                'id'    => 48,
+                'title' => 'notice_edit',
+            ],
+            [
+                'id'    => 49,
+                'title' => 'notice_delete',
+            ],
             
         ];
 

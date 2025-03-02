@@ -27,9 +27,24 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::resource('category', 'CategoryController');
     Route::resource('company', 'CompanyController');
     Route::resource('designation', 'DesignationController');
-    Route::resource('client', 'ClientController');
-    Route::resource('task', 'TaskController');
 
+    Route::resource('client', 'ClientController');
+    Route::resource('magazine', 'MagazineController');
+    Route::get('client-magazine/{id}', [App\Http\Controllers\Admin\MagazineController::class, 'clientMagazine'])->name('client.magazine');
+    Route::get('magazine-send/{id}', [App\Http\Controllers\Admin\MagazineController::class, 'magazineSend'])->name('magazine.send');
+
+    Route::get('client-data-export', [App\Http\Controllers\Admin\ClientController::class, 'clientDataExport'])->name('client.data.export');
+    
+
+    Route::resource('task', 'TaskController');
+    Route::get('task-completed/{id}', [App\Http\Controllers\Admin\TaskController::class, 'taskCompleted'])->name('task.completed');
+
+    Route::get('task-monthly', [App\Http\Controllers\Admin\TaskController::class, 'monthly'])->name('task.monthly');
+    Route::get('task-today', [App\Http\Controllers\Admin\TaskController::class, 'today'])->name('task.today');
+    Route::get('task-pending', [App\Http\Controllers\Admin\TaskController::class, 'pending'])->name('task.pending');
+    Route::get('tasks-completed', [App\Http\Controllers\Admin\TaskController::class, 'completed'])->name('tasks.completed');
+
+    Route::resource('notice', 'NoticeController');
 
 });
 

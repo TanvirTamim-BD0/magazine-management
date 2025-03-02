@@ -34,7 +34,7 @@ class TaskController extends Controller
         $data['assign_date'] = Carbon::now()->toDateString();
         
         if(Task::create($data)){
-            return redirect()->route('admin.task.index')->with('message','Successfully Task Created');
+            return redirect()->back()->with('message','Successfully Task Created');
         }else{
             return redirect()->back();
         }
@@ -58,7 +58,7 @@ class TaskController extends Controller
     
         $taskData = Task::find($id);
         if($taskData->update($data)){
-            return redirect(route('admin.task.index'))->with('message','Successfully Task Updated');
+            return redirect()->back()->with('message','Successfully Task Updated');
         }else{
             return redirect()->back()->with('error','Error !! Update Failed');;
         }
@@ -75,4 +75,37 @@ class TaskController extends Controller
             return redirect()->back()->with('error','Error !! Delete Failed');
         }
     }    
+
+    public function taskCompleted($id)
+    {
+        $taskData = Task::where('id',$id)->first();
+        $taskData->status = 'Completed';
+        $taskData->save();
+        return redirect()->back()->with('message','Successfully Task Completed');
+    }
+
+    public function monthly()
+    {
+        $taskData = Task::whereMonth('created_at', Carbon::now()->month)->get();
+        return view('admin.task.index',compact('taskData'));
+    }
+
+    public function today()
+    {
+        $taskData = Task::whereDate('created_at', Carbon::today())->get();
+        return view('admin.task.index',compact('taskData'));
+    }
+
+    public function pending()
+    {
+        $taskData = Task::where('status', 'Pending')->get();
+        return view('admin.task.index',compact('taskData'));
+    }
+
+    public function completed()
+    {
+        $taskData = Task::where('status', 'Completed')->get();
+        return view('admin.task.index',compact('taskData'));
+    }
+    
 }

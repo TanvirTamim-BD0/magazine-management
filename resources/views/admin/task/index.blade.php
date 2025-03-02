@@ -33,6 +33,9 @@
                         <th>
                             &nbsp;
                         </th>
+                        <th>
+                            &nbsp;
+                        </th>
                     </tr>
                 </thead>
                 <tbody>
@@ -48,7 +51,20 @@
                             <td>{{ $data->deadline ?? '' }}</td>
                             <td>{{ $data->priority ?? '' }}</td>
                             <td>{{ $data->remark ?? '' }}</td>
-                            <td>{{ $data->status ?? '' }}</td>
+                            <td>
+                                @if($data->status == 'Pending')
+                                <span class="btn btn-sm btn-warning text-white">{{ $data->status ?? '' }}</span>
+                                @else
+                                <span class="btn btn-sm btn-success text-white">{{ $data->status ?? '' }}</span>
+                                @endif
+                            </td>
+
+                            <td>
+                                @if($data->status == 'Pending')
+                                <a href="{{ route('admin.task.completed', $data->id) }}" class="btn btn-sm btn-success"> Completed <i class="fa fa-arrow-up"></i></a>
+                                @else
+                                @endif
+                            </td>
                             
                             <td>
                                 @can('task_edit')

@@ -76,4 +76,12 @@ class ClientController extends Controller
             return redirect()->back()->with('error','Error !! Delete Failed');
         }
     }    
+
+
+    public function clientDataExport()
+    {
+        $clientData = Client::orderBy('id','desc')->get();
+        return view('admin.client.clientReport',compact('clientData'));
+    }
+
 }

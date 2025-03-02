@@ -1,19 +1,19 @@
 @extends('layouts.admin')
 @section('content')
-@can('client_create')
+@can('notice_create')
     <div style="margin-bottom: 10px;" class="row">
         <div class="col-lg-12">
-            <a class="btn btn-success" href="{{ route('admin.client.create') }}">
-                Add Client
+            <a class="btn btn-success" href="{{ route('admin.notice.create') }}">
+                Add Notice
             </a>
         </div>
     </div>
 @endcan
 <div class="card">
     <div class="card-header">
-        Client List
-        <a href="{{ route('admin.client.data.export') }}" class="btn btn-sm btn-danger float-right"> <i class="fa fa-print"></i> Print All Client Data</a>
+        Notice List
     </div>
+
     <div class="card-body">
         <div class="table-responsive">
             <table class=" table table-bordered table-striped table-hover datatable datatable-User">
@@ -26,25 +26,13 @@
                             SL
                         </th>
                         <th>
-                            Name
+                            Title
                         </th>
                         <th>
-                            Magazine
+                            File
                         </th>
                         <th>
-                            Designation
-                        </th>
-                        <th>
-                            Company
-                        </th>
-                        <th>
-                            Address
-                        </th>
-                        <th>
-                            Email
-                        </th>
-                        <th>
-                            Phone
+                            Date
                         </th>
                         <th>
                             &nbsp;
@@ -52,35 +40,31 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach($clientData as $key => $data)
+                    @foreach($noticeData as $key => $data)
                         <tr data-entry-id="{{ $data->id }}">
                             <td>
 
                             </td>
                             <td>{{ $loop->iteration }}</td>
-                            <td>{{ $data->name ?? '' }}</td>
                             <td>
-                                @can('magazine_access')
-                                    <a class="btn btn-xs btn-outline-info" href="{{ route('admin.client.magazine', $data->id) }}" style="text-decoration: underline;">
-                                        <i class="fa fa-book"></i> Magazine
-                                    </a>
-                                @endcan
+                                {{ $data->title ?? '' }}
                             </td>
-                            <td>{{ $data->designationData->name ?? '' }}</td>
-                            <td>{{ $data->companyData->name ?? '' }}</td>
-                            <td>{{ $data->address ?? '' }}</td>
-                            <td>{{ $data->email ?? '' }}</td>
-                            <td>{{ $data->phone ?? '' }}</td>
+                            <td>
+                                <a class="btn btn-sm btn-danger" href="{{ asset('uploads/notice/'.$data->image) }}" download="{{$data->image}}"> <i class="fa fa-file-pdf-o" aria-hidden="true"></i> Download</a>
+                            </td>
+                            <td>
+                                {{ $data->date ?? '' }}
+                            </td>
                             
                             <td>
-                                @can('client_edit')
-                                    <a class="btn btn-xs btn-primary" href="{{ route('admin.client.edit', $data->id) }}">
-                                       Edit
+                                @can('notice_edit')
+                                    <a class="btn btn-xs btn-info" href="{{ route('admin.notice.edit', $data->id) }}">
+                                        Edit
                                     </a>
                                 @endcan
 
-                                @can('client_delete')
-                                    <form action="{{ route('admin.client.destroy', $data->id) }}" method="POST" onsubmit="return confirm('{{ trans('global.areYouSure') }}');" style="display: inline-block;">
+                                @can('notice_delete')
+                                    <form action="{{ route('admin.notice.destroy', $data->id) }}" method="POST" onsubmit="return confirm('{{ trans('global.areYouSure') }}');" style="display: inline-block;">
                                         <input type="hidden" name="_method" value="DELETE">
                                         <input type="hidden" name="_token" value="{{ csrf_token() }}">
                                         <input type="submit" class="btn btn-xs btn-danger" value="Delete">
