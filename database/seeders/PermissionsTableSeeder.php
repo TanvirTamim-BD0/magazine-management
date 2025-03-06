@@ -206,6 +206,10 @@ class PermissionsTableSeeder extends Seeder
                 'id'    => 49,
                 'title' => 'notice_delete',
             ],
+            [
+                'id'    => 50,
+                'title' => 'magazine_send',
+            ],
             
         ];
 

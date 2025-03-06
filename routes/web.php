@@ -30,10 +30,14 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
 
     Route::resource('client', 'ClientController');
     Route::resource('magazine', 'MagazineController');
-    Route::get('client-magazine/{id}', [App\Http\Controllers\Admin\MagazineController::class, 'clientMagazine'])->name('client.magazine');
-    Route::get('magazine-send/{id}', [App\Http\Controllers\Admin\MagazineController::class, 'magazineSend'])->name('magazine.send');
+    Route::resource('magazine-send', 'MagazineSendController');
+    
+    Route::get('client-magazine/{id}', [App\Http\Controllers\Admin\MagazineSendController::class, 'clientMagazine'])->name('client.magazine');
+    Route::get('magazine-send-status/{id}', [App\Http\Controllers\Admin\MagazineSendController::class, 'magazineSendStatus'])->name('magazine-send-status');
+    Route::get('magazine-receive-status/{id}', [App\Http\Controllers\Admin\MagazineSendController::class, 'magazineReceiveStatus'])->name('magazine-receive-status');
 
     Route::get('client-data-export', [App\Http\Controllers\Admin\ClientController::class, 'clientDataExport'])->name('client.data.export');
+    Route::post('client-data-export-area-filter', [App\Http\Controllers\Admin\ClientController::class, 'areaFilter'])->name('area.filter');
     
 
     Route::resource('task', 'TaskController');

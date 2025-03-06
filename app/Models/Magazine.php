@@ -11,21 +11,13 @@ class Magazine extends Model
 
     protected $fillable = [
         'user_id',
-        'client_id',
         'name',
-        'date',
         'image',
-        'status',
     ];
 
     public function userData()
     {
         return $this->belongsTo(User::class,'user_id');
-    }
-
-    public function clientData()
-    {
-        return $this->belongsTo(Client::class,'client_id');
     }
 
 }

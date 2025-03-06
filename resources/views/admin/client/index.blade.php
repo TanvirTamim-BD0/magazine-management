@@ -29,9 +29,6 @@
                             Name
                         </th>
                         <th>
-                            Magazine
-                        </th>
-                        <th>
                             Designation
                         </th>
                         <th>
@@ -47,6 +44,12 @@
                             Phone
                         </th>
                         <th>
+                            Area Code
+                        </th>
+                        <th>
+                            Pending Magazine
+                        </th>
+                        <th>
                             &nbsp;
                         </th>
                     </tr>
@@ -58,19 +61,33 @@
 
                             </td>
                             <td>{{ $loop->iteration }}</td>
-                            <td>{{ $data->name ?? '' }}</td>
-                            <td>
-                                @can('magazine_access')
-                                    <a class="btn btn-xs btn-outline-info" href="{{ route('admin.client.magazine', $data->id) }}" style="text-decoration: underline;">
-                                        <i class="fa fa-book"></i> Magazine
-                                    </a>
-                                @endcan
-                            </td>
+                            <td><a href="{{ route('admin.client.magazine', $data->id) }}" style="text-decoration: underline;">{{ $data->name ?? '' }} </a></td>
                             <td>{{ $data->designationData->name ?? '' }}</td>
                             <td>{{ $data->companyData->name ?? '' }}</td>
                             <td>{{ $data->address ?? '' }}</td>
                             <td>{{ $data->email ?? '' }}</td>
                             <td>{{ $data->phone ?? '' }}</td>
+                            <td>{{ $data->area_code ?? '' }}</td>
+
+                            @php
+                                $getPendingMagazines = App\Models\MagazineSend::getPendingMagazine($data->id);
+                            @endphp
+
+
+                            <td>
+                                <span style="color: #0e89a7">@if(isset($getPendingMagazines))
+                                {{$getPendingMagazines->magazineData->name ?? ''}}</span><br>
+
+                                @if($getPendingMagazines->send_status == 'Pending')
+                                <span class="btn btn-sm btn-warning text-white">{{ $getPendingMagazines->send_status ?? '' }}</span>
+
+                                <a href="{{route('admin.magazine-send-status',$getPendingMagazines->id)}}" class="btn btn-sm btn-success text-white mt-1"><i class="fa fa-arrow-up"></i></a>
+                                @else
+                                <span class="btn btn-sm btn-success text-white">{{ $getPendingMagazines->send_status ?? '' }}</span>
+                                @endif
+                                @else
+                                @endif
+                            </td>
                             
                             <td>
                                 @can('client_edit')

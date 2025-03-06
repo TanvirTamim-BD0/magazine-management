@@ -17,6 +17,7 @@ class Client extends Model
         'address',
         'email',
         'phone',
+        'area_code'
     ];
 
     public function userData()

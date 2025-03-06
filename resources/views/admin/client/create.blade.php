@@ -16,8 +16,8 @@
             </div>
 
             <div class="form-group">
-                    <label class="required" for="designation_id">Designation</label>
-                        <select class="form-control select2 {{ $errors->has('designation_id') ? 'is-invalid' : '' }}" name="designation_id" required>
+                    <label for="designation_id">Designation</label>
+                        <select class="form-control select2 {{ $errors->has('designation_id') ? 'is-invalid' : '' }}" name="designation_id">
                             <option selected disabled></option>
                             @foreach($designationData as $designation)
                             <option value="{{$designation->id}}">{{$designation->name}}</option>
@@ -42,14 +42,19 @@
             </div>
 
             <div class="form-group">
-                <label class="required" for="name">Email</label>
-                <input class="form-control {{ $errors->has('email') ? 'is-invalid' : '' }}" type="email" name="email" id="email" value="{{ old('email', '') }}" required>
+                <label for="name">Email</label>
+                <input class="form-control {{ $errors->has('email') ? 'is-invalid' : '' }}" type="email" name="email" id="email" value="{{ old('email', '') }}">
             </div>
 
 
             <div class="form-group">
                 <label class="required" for="phone">Phone</label>
                 <input class="form-control {{ $errors->has('phone') ? 'is-invalid' : '' }}" type="text" name="phone" id="phone" value="{{ old('phone', '') }}" required>
+            </div>
+
+            <div class="form-group">
+                <label class="required" for="area_code">Area Code</label>
+                <input class="form-control {{ $errors->has('area_code') ? 'is-invalid' : '' }}" type="text" name="area_code" id="area_code" value="{{ old('area_code', '') }}" required>
             </div>
 
 

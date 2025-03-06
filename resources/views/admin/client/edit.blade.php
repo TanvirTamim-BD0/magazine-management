@@ -17,8 +17,8 @@
             </div>
 
             <div class="form-group">
-                    <label class="required" for="designation_id">Designation</label>
-                        <select class="form-control select2 {{ $errors->has('designation_id') ? 'is-invalid' : '' }}" name="designation_id" required>
+                    <label for="designation_id">Designation</label>
+                        <select class="form-control select2 {{ $errors->has('designation_id') ? 'is-invalid' : '' }}" name="designation_id">
                             <option selected disabled></option>
                             @foreach($designationData as $designation)
                             <option value="{{$designation->id}}" {{$designation->id == $clientData->designation_id ? 'selected' : ''}} >{{$designation->name}}</option>
@@ -43,14 +43,19 @@
             </div>
 
             <div class="form-group">
-                <label class="required" for="name">Email</label>
-                <input class="form-control {{ $errors->has('email') ? 'is-invalid' : '' }}" type="email" name="email" id="email" value="{{$clientData->email}}" required>
+                <label for="name">Email</label>
+                <input class="form-control {{ $errors->has('email') ? 'is-invalid' : '' }}" type="email" name="email" id="email" value="{{$clientData->email}}">
             </div>
 
 
             <div class="form-group">
                 <label class="required" for="phone">Phone</label>
                 <input class="form-control {{ $errors->has('phone') ? 'is-invalid' : '' }}" type="text" name="phone" id="phone" value="{{$clientData->phone}}" required>
+            </div>
+
+            <div class="form-group">
+                <label class="required" for="area_code">Area Code</label>
+                <input class="form-control {{ $errors->has('area_code') ? 'is-invalid' : '' }}" type="text" name="area_code" id="area_code" value="{{$clientData->area_code}}" required>
             </div>
 
             <div class="form-group">

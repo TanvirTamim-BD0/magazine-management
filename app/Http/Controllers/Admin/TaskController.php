@@ -12,8 +12,15 @@ use Carbon\Carbon;
 class TaskController extends Controller
 {
     public function index()
-    {   
-        $taskData = Task::orderBy('id','desc')->get();
+    {      
+        if(Auth::user()->role == 'Admin'){
+            $taskData = Task::orderBy('id','desc')->get();
+        }elseif(Auth::user()->role == 'User'){
+            $taskData = Task::where('user_id',Auth::user()->id)->orderBy('id', 'desc')->get();
+        }else{
+            $taskData = [];
+        }
+
         return view('admin.task.index',compact('taskData'));
     }
 
@@ -85,26 +92,50 @@ class TaskController extends Controller
     }
 
     public function monthly()
-    {
-        $taskData = Task::whereMonth('created_at', Carbon::now()->month)->get();
+    {   
+        if(Auth::user()->role == 'Admin'){
+            $taskData = Task::whereMonth('created_at', Carbon::now()->month)->get();
+        }elseif(Auth::user()->role == 'User'){
+            $taskData = Task::where('user_id',Auth::user()->id)->whereMonth('created_at', Carbon::now()->month)->orderBy('id', 'desc')->get();
+        }else{
+            $taskData = [];
+        }
         return view('admin.task.index',compact('taskData'));
     }
 
     public function today()
-    {
-        $taskData = Task::whereDate('created_at', Carbon::today())->get();
+    {   
+        if(Auth::user()->role == 'Admin'){
+            $taskData = Task::whereDate('created_at', Carbon::today())->get();
+        }elseif(Auth::user()->role == 'User'){
+            $taskData = Task::where('user_id',Auth::user()->id)->whereDate('created_at', Carbon::today())->orderBy('id', 'desc')->get();
+        }else{
+            $taskData = [];
+        }
         return view('admin.task.index',compact('taskData'));
     }
 
     public function pending()
-    {
-        $taskData = Task::where('status', 'Pending')->get();
+    {   
+        if(Auth::user()->role == 'Admin'){
+            $taskData = Task::where('status', 'Pending')->get();
+        }elseif(Auth::user()->role == 'User'){
+            $taskData = Task::where('user_id',Auth::user()->id)->where('status', 'Pending')->orderBy('id', 'desc')->get();
+        }else{
+            $taskData = [];
+        }
         return view('admin.task.index',compact('taskData'));
     }
 
     public function completed()
-    {
-        $taskData = Task::where('status', 'Completed')->get();
+    {   
+        if(Auth::user()->role == 'Admin'){
+            $taskData = Task::where('status', 'Completed')->get();
+        }elseif(Auth::user()->role == 'User'){
+            $taskData = Task::where('user_id',Auth::user()->id)->where('status', 'Completed')->orderBy('id', 'desc')->get();
+        }else{
+            $taskData = [];
+        }
         return view('admin.task.index',compact('taskData'));
     }
     

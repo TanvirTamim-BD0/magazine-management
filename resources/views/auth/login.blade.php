@@ -19,7 +19,7 @@
         <div class="card mx-4 shadow-lg border-0 rounded">
             <div class="card-body p-5 text-center">
 
-                <h1 class="text-primary">Magazine Management</h1>
+                <h1 class="text-primary">BCMEA</h1>
                 
                 <!-- Logo -->
                <!--  <div class="mb-4">

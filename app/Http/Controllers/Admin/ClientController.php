@@ -84,4 +84,10 @@ class ClientController extends Controller
         return view('admin.client.clientReport',compact('clientData'));
     }
 
+    public function areaFilter(Request $request)
+    {
+        $clientData = Client::where('area_code',$request->area_code)->orderBy('id','desc')->get();
+        return view('admin.client.clientReport',compact('clientData'));
+    }
+
 }

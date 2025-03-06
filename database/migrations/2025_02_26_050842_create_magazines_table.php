@@ -14,13 +14,9 @@ return new class extends Migration
         Schema::create('magazines', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('user_id')->nullable();
-            $table->unsignedBigInteger('client_id')->nullable();
             $table->string('name')->nullable();
-            $table->string('date')->nullable();
             $table->string('image')->nullable();
-            $table->string('status')->default('Pending');
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
-            $table->foreign('client_id')->references('id')->on('clients')->onDelete('cascade');
             $table->timestamp('created_at')->default(DB::raw('CURRENT_TIMESTAMP'));
             $table->timestamp('updated_at')->default(DB::raw('CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP'));
         });

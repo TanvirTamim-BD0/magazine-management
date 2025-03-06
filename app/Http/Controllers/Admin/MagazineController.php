@@ -4,31 +4,27 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\Client;
-use App\Models\Designation;
-use App\Models\Company;
 use App\Models\Magazine;
 use Auth;
 use Carbon\Carbon;
 
 class MagazineController extends Controller
 {
-    public function clientMagazine($id)
+    public function index()
+    {   
+        $magazineData = Magazine::orderBy('id','desc')->get();
+        return view('admin.magazine.index',compact('magazineData'));
+    }
+
+    public function create()
     {
-    	$clientData = Client::where('id',$id)->first();
-    	$magazineData = Magazine::orderBy('id','desc')->get();
-    	return view('admin.client.magazine',compact('clientData','magazineData'));
+        return view('admin.magazine.create');
     }
 
     public function store(Request $request)
     {
-        $request->validate([
-            'name' => 'required',
-        ]);
-
         $data = $request->all();
         $data['user_id'] = Auth::user()->id;
-        $data['date'] = Carbon::now()->toDateString();
 
         if($request->image != ''){
 	            $file = $request->file('image');
@@ -39,18 +35,22 @@ class MagazineController extends Controller
         	}
         
         if(Magazine::create($data)){
-            return redirect()->back()->with('message','Successfully Magazine Added');
+            return redirect()->route('admin.magazine.index')->with('message','Successfully Magazine Created');
         }else{
             return redirect()->back();
         }
     }
 
+    public function edit($id)
+    {   
+        $magazineData = Magazine::where('id',$id)->first();
+        return view('admin.magazine.edit',compact('magazineData'));
+    }
+
     public function update(Request $request,$id){
-        $request->validate([
-            'name' => 'required',
-        ]);
 
         $data = $request->all();
+    
         $magazineData = Magazine::find($id);
 
         if($request->image != ''){
@@ -69,10 +69,11 @@ class MagazineController extends Controller
        		 }
 
         if($magazineData->update($data)){
-            return redirect()->back()->with('message','Successfully Magazine Updated');
+            return redirect(route('admin.magazine.index'))->with('message','Successfully Magazine Updated');
         }else{
             return redirect()->back()->with('error','Error !! Update Failed');;
         }
+
     }
 
     public function destroy($id)
@@ -80,20 +81,9 @@ class MagazineController extends Controller
         $magazineData = Magazine::find($id);
         if($magazineData->delete()){
 
-            return redirect()->back()->with('message','Successfully Magazine Deleted');
+            return redirect(route('admin.magazine.index'))->with('message','Successfully Magazine Deleted');
         }else{
             return redirect()->back()->with('error','Error !! Delete Failed');
         }
-    }  
-
-    public function magazineSend($id)
-    {
-    	$magazineData = Magazine::where('id',$id)->first();
-    	$magazineData->status = 'Send';
-    	$magazineData->save();
-    	return redirect()->back()->with('message','Successfully Magazine Send');
-
-    } 
-
-
+    }    
 }

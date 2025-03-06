@@ -270,7 +270,7 @@
             </div>
             <div class="col-md-10">
                 <marquee class="marquee-text" behavior="scroll" direction="left">
-                    {{$noticeFirst->title}}
+                    {{$noticeFirst->title ?? ''}}
                 </marquee>
             </div>
         </div>
