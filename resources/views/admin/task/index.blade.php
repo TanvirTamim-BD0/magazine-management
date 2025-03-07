@@ -29,6 +29,7 @@
                         <th>Deadline</th>
                         <th>Priority</th>
                         <th>Remark</th>
+                        <th>Admin Comment</th>
                         <th>Status</th>
                         <th>
                             &nbsp;
@@ -51,6 +52,7 @@
                             <td>{{ $data->deadline ?? '' }}</td>
                             <td>{{ $data->priority ?? '' }}</td>
                             <td>{{ $data->remark ?? '' }}</td>
+                            <td></td>
                             <td>
                                 @if($data->status == 'Pending')
                                 <span class="btn btn-sm btn-warning text-white">{{ $data->status ?? '' }}</span>
