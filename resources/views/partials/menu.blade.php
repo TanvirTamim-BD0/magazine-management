@@ -124,7 +124,7 @@
                         </li>
                     @endcan
 
-                    @can('completed_delete')
+                    @can('completed_task')
                         <li class="c-sidebar-nav-item">
                             <a href="{{ route("admin.tasks.completed") }}" class="c-sidebar-nav-link {{ request()->is("admin/task") || request()->is("admin/task/*") ? "c-active" : "" }}">
                                 <i class="fa fa-circle-thin c-sidebar-nav-icon">
@@ -137,7 +137,7 @@
 
                     @can('task_access')
                         <li class="c-sidebar-nav-item">
-                            <a href="{{ route("admin.task.index") }}" class="c-sidebar-nav-link {{ request()->is("admin/task") || request()->is("admin/task/*") ? "c-active" : "" }}">
+                            <a href="{{ route("admin.task.index") }}" class="c-sidebar-nav-link {{ request()->is("admin/task") || request()->is("admin/task") ? "c-active" : "" }}">
                                 <i class="fa fa-circle-thin c-sidebar-nav-icon">
 
                                 </i>

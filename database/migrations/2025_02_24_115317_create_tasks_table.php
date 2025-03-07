@@ -20,7 +20,8 @@ return new class extends Migration
             $table->string('deadline')->nullable();
             $table->string('priority')->nullable();
             $table->string('follow_up')->nullable();
-            $table->string('remark')->nullable();
+            $table->text('remark')->nullable();
+            $table->text('admin_comment')->nullable();
             $table->string('status')->default('Pending');
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->timestamp('created_at')->default(DB::raw('CURRENT_TIMESTAMP'));

@@ -48,6 +48,8 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::get('task-pending', [App\Http\Controllers\Admin\TaskController::class, 'pending'])->name('task.pending');
     Route::get('tasks-completed', [App\Http\Controllers\Admin\TaskController::class, 'completed'])->name('tasks.completed');
 
+    Route::put('admin-comment/{id}', [App\Http\Controllers\Admin\TaskController::class, 'adminComment'])->name('admin.comment');
+
     Route::resource('notice', 'NoticeController');
 
 });

@@ -15,13 +15,16 @@ class TaskController extends Controller
     {      
         if(Auth::user()->role == 'Admin'){
             $taskData = Task::orderBy('id','desc')->get();
+            $users = User::orderBy('id','desc')->get();
         }elseif(Auth::user()->role == 'User'){
             $taskData = Task::where('user_id',Auth::user()->id)->orderBy('id', 'desc')->get();
+            $users = User::orderBy('id','desc')->get();
         }else{
             $taskData = [];
+            $users = [];
         }
 
-        return view('admin.task.index',compact('taskData'));
+        return view('admin.task.index',compact('taskData','users'));
     }
 
     public function create()
@@ -95,48 +98,68 @@ class TaskController extends Controller
     {   
         if(Auth::user()->role == 'Admin'){
             $taskData = Task::whereMonth('created_at', Carbon::now()->month)->get();
+            $users = User::orderBy('id','desc')->get();
         }elseif(Auth::user()->role == 'User'){
             $taskData = Task::where('user_id',Auth::user()->id)->whereMonth('created_at', Carbon::now()->month)->orderBy('id', 'desc')->get();
+            $users = User::orderBy('id','desc')->get();
         }else{
             $taskData = [];
+            $users = [];
         }
-        return view('admin.task.index',compact('taskData'));
+        return view('admin.task.index',compact('taskData','users'));
     }
 
     public function today()
     {   
         if(Auth::user()->role == 'Admin'){
             $taskData = Task::whereDate('created_at', Carbon::today())->get();
+            $users = User::orderBy('id','desc')->get();
         }elseif(Auth::user()->role == 'User'){
             $taskData = Task::where('user_id',Auth::user()->id)->whereDate('created_at', Carbon::today())->orderBy('id', 'desc')->get();
+            $users = User::orderBy('id','desc')->get();
         }else{
             $taskData = [];
+            $users = [];
         }
-        return view('admin.task.index',compact('taskData'));
+        return view('admin.task.index',compact('taskData','users'));
     }
 
     public function pending()
     {   
         if(Auth::user()->role == 'Admin'){
             $taskData = Task::where('status', 'Pending')->get();
+            $users = User::orderBy('id','desc')->get();
         }elseif(Auth::user()->role == 'User'){
             $taskData = Task::where('user_id',Auth::user()->id)->where('status', 'Pending')->orderBy('id', 'desc')->get();
+            $users = User::orderBy('id','desc')->get();
         }else{
             $taskData = [];
+            $users = [];
         }
-        return view('admin.task.index',compact('taskData'));
+        return view('admin.task.index',compact('taskData','users'));
     }
 
     public function completed()
     {   
         if(Auth::user()->role == 'Admin'){
             $taskData = Task::where('status', 'Completed')->get();
+            $users = User::orderBy('id','desc')->get();
         }elseif(Auth::user()->role == 'User'){
             $taskData = Task::where('user_id',Auth::user()->id)->where('status', 'Completed')->orderBy('id', 'desc')->get();
+            $users = User::orderBy('id','desc')->get();
         }else{
             $taskData = [];
+            $users = [];
         }
-        return view('admin.task.index',compact('taskData'));
+        return view('admin.task.index',compact('taskData','users'));
+    }
+
+    public function adminComment(Request $request,$id)
+    {
+        $taskData = Task::where('id',$id)->first();
+        $taskData->admin_comment = $request->admin_comment;
+        $taskData->save();
+        return redirect()->back()->with('message','Successfully Admin Comment Updated');
     }
     
 }

@@ -18,10 +18,16 @@ class Task extends Model
         'priority',
         'follow_up',
         'remark',
+        'admin_comment',
         'status',
     ];
 
     public function userData()
+    {
+        return $this->belongsTo(User::class,'user_id');
+    }
+
+    public function assignData()
     {
         return $this->belongsTo(User::class,'assign_by');
     }
