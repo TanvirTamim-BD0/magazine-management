@@ -29,6 +29,9 @@
                             Title
                         </th>
                         <th>
+                            Description
+                        </th>
+                        <th>
                             File
                         </th>
                         <th>
@@ -50,7 +53,13 @@
                                 {{ $data->title ?? '' }}
                             </td>
                             <td>
+                                {{ $data->description ?? '' }}
+                            </td>
+                            <td>
+                                @if(isset($data->image))
                                 <a class="btn btn-sm btn-danger" href="{{ asset('uploads/notice/'.$data->image) }}" download="{{$data->image}}"> <i class="fa fa-file-pdf-o" aria-hidden="true"></i> Download</a>
+                                @else
+                                @endif
                             </td>
                             <td>
                                 {{ $data->date ?? '' }}

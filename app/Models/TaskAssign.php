@@ -5,21 +5,28 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Notice extends Model
+class TaskAssign extends Model
 {
     use HasFactory;
 
     protected $fillable = [
         'user_id',
-        'title',
-        'description',
-        'image',
-        'date',
+        'name',
+        'assign_to',
+        'deadline',
+        'remark',
+        'reply_comment',
+        'status',
     ];
 
     public function userData()
     {
         return $this->belongsTo(User::class,'user_id');
+    }
+
+    public function assignData()
+    {
+        return $this->belongsTo(User::class,'assign_to');
     }
 
 }

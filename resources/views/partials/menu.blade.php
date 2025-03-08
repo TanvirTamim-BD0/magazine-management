@@ -85,7 +85,7 @@
             @can('task_access')
             <li class="c-sidebar-nav-dropdown {{ request()->is("admin/task/*") ? "c-show" : "" }} {{ request()->is("admin/task*") ? "c-show" : "" }} {{ request()->is("admin/task*") ? "c-show" : "" }}">
                 <a class="c-sidebar-nav-dropdown-toggle" href="#">
-                    <i class="fa fa-th-list c-sidebar-nav-icon icon-size">
+                    <i class="fa fa-tasks c-sidebar-nav-icon icon-size">
                         </i>
                     Task Management
                 </a>
@@ -159,6 +159,41 @@
                     </a>
                 </li>
             @endcan 
+
+             @can('task_assign_access')
+            <li class="c-sidebar-nav-dropdown {{ request()->is("admin/task-assign/*") ? "c-show" : "" }} {{ request()->is("admin/i-assigned-task") ? "c-show" : "" }}">
+                <a class="c-sidebar-nav-dropdown-toggle" href="#">
+                    <i class="fa fa-th-list c-sidebar-nav-icon icon-size">
+                        </i>
+                    Task Assign
+                </a>
+                <ul class="c-sidebar-nav-dropdown-items">
+
+                    @can('task_assign_access')
+                        <li class="c-sidebar-nav-item">
+                            <a href="{{ route("admin.task-assign.index") }}" class="c-sidebar-nav-link {{ request()->is("admin/task-assign") || request()->is("admin/task-assign/*") ? "c-active" : "" }}">
+                                <i class="fa fa-circle-thin c-sidebar-nav-icon">
+
+                                </i>
+                                Assigned me
+                            </a>
+                        </li>
+                    @endcan
+
+                    @can('task_assign_access')
+                        <li class="c-sidebar-nav-item">
+                            <a href="{{ route("admin.i-assigned-task") }}" class="c-sidebar-nav-link {{ request()->is("admin/task-assign") || request()->is("admin/task-assign") ? "c-active" : "" }}">
+                                <i class="fa fa-circle-thin c-sidebar-nav-icon">
+
+                                </i>
+                                I Assigned
+                            </a>
+                        </li>
+                    @endcan
+
+                </ul>
+            </li>
+            @endcan
 
 
         @can('user_management_access')

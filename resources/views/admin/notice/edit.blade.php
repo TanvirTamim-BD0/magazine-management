@@ -22,6 +22,11 @@
             </div>
 
             <div class="form-group">
+                <label for="description">Description</label>
+                <textarea class="form-control" type="text" name="description" >{{$noticeData->description}}</textarea>
+            </div>
+
+            <div class="form-group">
                 <label for="image">Image</label>
                 <input class="form-control" type="file" name="image">
                     @if($noticeData->image)

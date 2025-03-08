@@ -1,6 +1,9 @@
 <?php
 
 Route::redirect('/', '/login');
+Route::get('verify-magazine-received', [App\Http\Controllers\MagazineVerifyController::class, 'verifyMagazineReceive'])->name('verify-magazine-received');
+Route::post('magazine-verify-status', [App\Http\Controllers\MagazineVerifyController::class, 'magazineVerify'])->name('magazine.verify');
+
 Route::get('/home', function () {
     if (session('status')) {
         return redirect()->route('admin.home')->with('status', session('status'));
@@ -39,7 +42,6 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::get('client-data-export', [App\Http\Controllers\Admin\ClientController::class, 'clientDataExport'])->name('client.data.export');
     Route::post('client-data-export-area-filter', [App\Http\Controllers\Admin\ClientController::class, 'areaFilter'])->name('area.filter');
     
-
     Route::resource('task', 'TaskController');
     Route::get('task-completed/{id}', [App\Http\Controllers\Admin\TaskController::class, 'taskCompleted'])->name('task.completed');
 
@@ -47,10 +49,13 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::get('task-today', [App\Http\Controllers\Admin\TaskController::class, 'today'])->name('task.today');
     Route::get('task-pending', [App\Http\Controllers\Admin\TaskController::class, 'pending'])->name('task.pending');
     Route::get('tasks-completed', [App\Http\Controllers\Admin\TaskController::class, 'completed'])->name('tasks.completed');
-
     Route::put('admin-comment/{id}', [App\Http\Controllers\Admin\TaskController::class, 'adminComment'])->name('admin.comment');
 
     Route::resource('notice', 'NoticeController');
+    Route::resource('task-assign', 'TaskAssignController');#
+    Route::get('i-assigned-task', [App\Http\Controllers\Admin\TaskAssignController::class, 'IAssignedTask'])->name('i-assigned-task');
+    Route::get('task-assign-completed/{id}', [App\Http\Controllers\Admin\TaskAssignController::class, 'taskAssignCompleted'])->name('task-assign.completed');
+    Route::put('reply-comment/{id}', [App\Http\Controllers\Admin\TaskAssignController::class, 'replyComment'])->name('reply.comment');
 
 });
 

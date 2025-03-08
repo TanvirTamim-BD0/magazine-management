@@ -21,6 +21,11 @@
             </div>
 
             <div class="form-group">
+                <label for="description">Description</label>
+                <textarea class="form-control" type="text" name="description" ></textarea>
+            </div>
+
+            <div class="form-group">
                 <label for="image">File</label>
                 <input class="form-control" type="file" name="image">
                                             

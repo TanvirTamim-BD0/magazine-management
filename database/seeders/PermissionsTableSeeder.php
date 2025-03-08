@@ -61,6 +61,10 @@ class PermissionsTableSeeder extends Seeder
             ['title' => 'notice_create'],
             ['title' => 'notice_edit'],
             ['title' => 'notice_delete'],
+            ['title' => 'task_assign_access'],
+            ['title' => 'task_assign_create'],
+            ['title' => 'task_assign_edit'],
+            ['title' => 'task_assign_delete'],
         ];
         Permission::insert($permissions);
     }

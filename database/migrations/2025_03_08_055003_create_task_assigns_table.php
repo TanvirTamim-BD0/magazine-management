@@ -11,18 +11,18 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('tasks', function (Blueprint $table) {
+        Schema::create('task_assigns', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('user_id')->nullable();
             $table->string('name')->nullable();
-            $table->string('assign_date')->nullable();
-            $table->string('assign_by')->nullable();
+            $table->unsignedBigInteger('assign_to')->nullable();
             $table->string('deadline')->nullable();
-            $table->string('priority')->nullable();
             $table->text('remark')->nullable();
-            $table->text('admin_comment')->nullable();
+            $table->text('reply_comment')->nullable();
             $table->string('status')->default('Pending');
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('assign_to')->references('id')->on('users')->onDelete('cascade');
+
             $table->timestamp('created_at')->default(DB::raw('CURRENT_TIMESTAMP'));
             $table->timestamp('updated_at')->default(DB::raw('CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP'));
         });
@@ -33,6 +33,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('tasks');
+        Schema::dropIfExists('task_assigns');
     }
 };

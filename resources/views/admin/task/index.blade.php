@@ -189,6 +189,34 @@
                                 @endcan
                             </td>
                         </tr>
+
+                    <!-- Admin Comment Modal -->
+                    <div class="modal fade" id="adminComment{{ $data->id }}" tabindex="-1" role="dialog" aria-labelledby="adminCommentLabel" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="adminCommentLabel">Admin Comment</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <form method="POST" action="{{ route('admin.admin.comment', $data->id) }}" enctype="multipart/form-data">
+                                    @csrf
+                                    @method('PUT')
+                                    <div class="modal-body">
+                                        <div class="form-group">
+                                            <label for="admin_comment">Admin Comment</label>
+                                            <textarea class="form-control" type="text" name="admin_comment">{{ $data->admin_comment }}</textarea>
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                        <button type="submit" class="btn btn-primary">Submit</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
                     @endforeach
                 </tbody>
             </table>

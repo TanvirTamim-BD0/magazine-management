@@ -80,7 +80,7 @@ class TaskController extends Controller
         $taskData = Task::find($id);
         if($taskData->delete()){
 
-            return redirect(route('admin.task.index'))->with('message','Successfully Task Deleted');
+            return redirect()->back()->with('message','Successfully Task Deleted');
         }else{
             return redirect()->back()->with('error','Error !! Delete Failed');
         }
