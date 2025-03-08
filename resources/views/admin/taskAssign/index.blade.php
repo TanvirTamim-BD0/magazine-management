@@ -41,6 +41,14 @@
 
 </style>
 
+@can('category_create')
+    <div class="mb-3">
+        <a class="btn btn-success" href="{{ route('admin.task-assign.create') }}">
+            Add Assign Task
+        </a>
+    </div>
+@endcan
+
 @if(Auth::user()->role == 'Admin')
 <div class="filter-bar">
     <select id="assignToFilter" class="form-control">
@@ -59,6 +67,7 @@
             <table class="table table-bordered table-striped table-hover datatable">
                 <thead>
                     <tr>
+                        <th width="10"></th>
                         <th>SL</th>
                         <th>Name</th>
                         <th>Assign By</th>
@@ -74,6 +83,7 @@
                 <tbody>
                     @foreach($taskAssignData as $key => $data)
                         <tr>
+                            <td></td>
                             <td>{{ $loop->iteration }}</td>
                             <td>{{ $data->name ?? '' }}</td>
                             <td>{{ $data->userData->name ?? '' }}</td>
@@ -96,6 +106,20 @@
                                         Reply Comment
                                     </button>
                                 @endif
+
+                                @can('task_assign_edit')
+                                    <a class="btn btn-xs btn-info" href="{{ route('admin.task-assign.edit', $data->id) }}">
+                                        Edit
+                                    </a>
+                                @endcan
+
+                                @can('task_assign_delete')
+                                    <form action="{{ route('admin.task-assign.destroy', $data->id) }}" method="POST" onsubmit="return confirm('{{ trans('global.areYouSure') }}');" style="display: inline-block;">
+                                        @csrf
+                                        @method('DELETE')
+                                        <input type="submit" class="btn btn-xs btn-danger" value="Delete">
+                                    </form>
+                                @endcan
                             </td>
                         </tr>
                         <div class="modal fade" id="replyComment{{ $data->id }}" tabindex="-1" role="dialog">

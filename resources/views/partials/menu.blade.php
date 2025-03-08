@@ -161,7 +161,7 @@
             @endcan 
 
              @can('task_assign_access')
-            <li class="c-sidebar-nav-dropdown {{ request()->is("admin/task-assign/*") ? "c-show" : "" }} {{ request()->is("admin/i-assigned-task") ? "c-show" : "" }}">
+            <li class="c-sidebar-nav-dropdown {{ request()->is("admin/task-assign/*") ? "c-show" : "" }} {{ request()->is("admin/task-assign*") ? "c-show" : "" }} {{ request()->is("admin/i-assigned-task") ? "c-show" : "" }}">
                 <a class="c-sidebar-nav-dropdown-toggle" href="#">
                     <i class="fa fa-th-list c-sidebar-nav-icon icon-size">
                         </i>
@@ -182,7 +182,7 @@
 
                     @can('task_assign_access')
                         <li class="c-sidebar-nav-item">
-                            <a href="{{ route("admin.i-assigned-task") }}" class="c-sidebar-nav-link {{ request()->is("admin/task-assign") || request()->is("admin/task-assign") ? "c-active" : "" }}">
+                            <a href="{{ route("admin.i-assigned-task") }}" class="c-sidebar-nav-link {{ request()->is("admin/i-assigned-task/*") || request()->is("admin/i-assigned-task") ? "c-active" : "" }}">
                                 <i class="fa fa-circle-thin c-sidebar-nav-icon">
 
                                 </i>
