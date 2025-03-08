@@ -52,7 +52,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::put('admin-comment/{id}', [App\Http\Controllers\Admin\TaskController::class, 'adminComment'])->name('admin.comment');
 
     Route::resource('notice', 'NoticeController');
-    Route::resource('task-assign', 'TaskAssignController');#
+    Route::resource('assign-task', 'TaskAssignController');
     Route::get('i-assigned-task', [App\Http\Controllers\Admin\TaskAssignController::class, 'IAssignedTask'])->name('i-assigned-task');
     Route::get('task-assign-completed/{id}', [App\Http\Controllers\Admin\TaskAssignController::class, 'taskAssignCompleted'])->name('task-assign.completed');
     Route::put('reply-comment/{id}', [App\Http\Controllers\Admin\TaskAssignController::class, 'replyComment'])->name('reply.comment');

@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Company;
 use Auth;
+use Karim007\LaravelSslwirlessSms\Facade\SslWirlessSms;
+use GuzzleHttp\Client;
 
 class CompanyController extends Controller
 {
@@ -28,6 +30,21 @@ class CompanyController extends Controller
 
         $data = $request->all();
         $data['user_id'] = Auth::user()->id;
+
+        /*$client = new Client();
+        $response = $client->post(env('API_END_POINT'), [
+            'json' => [
+                'api_token' => env('API_TOKEN'),
+                'sid'       => env('SID'),
+                'msisdn'    => '01882941261',
+                'sms'       => 'Hello',
+                'csms_id'   => time(),
+            ],
+            'headers' => [
+                'accept' => 'application/json',
+            ],
+        ]);
+        return $response->getStatusCode();*/
         
         if(Company::create($data)){
             return redirect()->route('admin.company.index')->with('message','Successfully Company Created');

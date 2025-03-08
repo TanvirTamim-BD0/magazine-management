@@ -161,7 +161,7 @@
             @endcan 
 
              @can('task_assign_access')
-            <li class="c-sidebar-nav-dropdown {{ request()->is("admin/task-assign/*") ? "c-show" : "" }} {{ request()->is("admin/task-assign*") ? "c-show" : "" }} {{ request()->is("admin/i-assigned-task") ? "c-show" : "" }}">
+            <li class="c-sidebar-nav-dropdown {{ request()->is("admin/assign-task/*") ? "c-show" : "" }} {{ request()->is("admin/assign-task*") ? "c-show" : "" }} {{ request()->is("admin/i-assigned-task") ? "c-show" : "" }}">
                 <a class="c-sidebar-nav-dropdown-toggle" href="#">
                     <i class="fa fa-th-list c-sidebar-nav-icon icon-size">
                         </i>
@@ -169,9 +169,23 @@
                 </a>
                 <ul class="c-sidebar-nav-dropdown-items">
 
+                    @if(Auth::user()->role == 'Admin')
                     @can('task_assign_access')
                         <li class="c-sidebar-nav-item">
-                            <a href="{{ route("admin.task-assign.index") }}" class="c-sidebar-nav-link {{ request()->is("admin/task-assign") || request()->is("admin/task-assign/*") ? "c-active" : "" }}">
+                            <a href="{{ route("admin.assign-task.index") }}" class="c-sidebar-nav-link {{ request()->is("admin/assign-task") || request()->is("admin/assign-task/*") ? "c-active" : "" }}">
+                                <i class="fa fa-circle-thin c-sidebar-nav-icon">
+
+                                </i>
+                                Task Assign List
+                            </a>
+                        </li>
+                    @endcan
+                    @endif
+
+                    @if(Auth::user()->role == 'User')
+                    @can('task_assign_access')
+                        <li class="c-sidebar-nav-item">
+                            <a href="{{ route("admin.assign-task.index") }}" class="c-sidebar-nav-link {{ request()->is("admin/assign-task") || request()->is("admin/assign-task/*") ? "c-active" : "" }}">
                                 <i class="fa fa-circle-thin c-sidebar-nav-icon">
 
                                 </i>
@@ -179,7 +193,9 @@
                             </a>
                         </li>
                     @endcan
+                    @endif
 
+                    @if(Auth::user()->role == 'User')
                     @can('task_assign_access')
                         <li class="c-sidebar-nav-item">
                             <a href="{{ route("admin.i-assigned-task") }}" class="c-sidebar-nav-link {{ request()->is("admin/i-assigned-task/*") || request()->is("admin/i-assigned-task") ? "c-active" : "" }}">
@@ -190,6 +206,7 @@
                             </a>
                         </li>
                     @endcan
+                    @endif
 
                 </ul>
             </li>

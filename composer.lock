@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "d02474798570cde71064d63c6dfb88e0",
+    "content-hash": "e89e9fafbb7ca9e56f51a6c6a2885bc6",
     "packages": [
         {
             "name": "barryvdh/laravel-dompdf",
@@ -1285,6 +1285,62 @@
                 }
             ],
             "time": "2023-12-03T19:50:20+00:00"
+        },
+        {
+            "name": "karim007/laravel-sslwirless-sms",
+            "version": "v1.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/karim-007/laravel-sslwirless-sms.git",
+                "reference": "e7ad5521eb74387ccc6203faf25e45ff8a10ffc9"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/karim-007/laravel-sslwirless-sms/zipball/e7ad5521eb74387ccc6203faf25e45ff8a10ffc9",
+                "reference": "e7ad5521eb74387ccc6203faf25e45ff8a10ffc9",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^7.4|^8.0|^8.1|^8.2"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "aliases": {
+                        "LaravelBkashTokenize": "Karim007\\LaravelSslwirlessSms\\LaravelSslwirlessSms"
+                    },
+                    "providers": [
+                        "Karim007\\LaravelSslwirlessSms\\SSLWirlessSmsServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Karim007\\LaravelSslwirlessSms\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Md abdul karim",
+                    "email": "karim.cse007@gmail.com"
+                }
+            ],
+            "description": "SSLWirless sms package for laravel",
+            "keywords": [
+                "sslwirless bulk sms",
+                "sslwirless sms",
+                "sslwirless sms for laravel",
+                "sslwirless sms laravel"
+            ],
+            "support": {
+                "issues": "https://github.com/karim-007/laravel-sslwirless-sms/issues",
+                "source": "https://github.com/karim-007/laravel-sslwirless-sms/tree/v1.2"
+            },
+            "time": "2024-06-02T06:24:07+00:00"
         },
         {
             "name": "laravel/framework",

@@ -95,7 +95,7 @@
     }
 </style>
 
-@can('category_create')
+@can('task_create')
     <div class="mb-3">
         <a class="btn btn-success" href="{{ route('admin.task.create') }}">
             Add Task
@@ -165,7 +165,8 @@
                                 @endif
                             </td>
                             <td>
-                                @if($data->status == 'Pending')
+
+                                @if(Auth::user()->id == $data->user_id && $data->status == 'Pending')
                                     <a href="{{ route('admin.task.completed', $data->id) }}" class="btn btn-sm btn-success">
                                         Completed <i class="fa fa-arrow-up"></i>
                                     </a>

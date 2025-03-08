@@ -41,9 +41,9 @@
 
 </style>
 
-@can('category_create')
+@can('task_assign_create')
     <div class="mb-3">
-        <a class="btn btn-success" href="{{ route('admin.task-assign.create') }}">
+        <a class="btn btn-success" href="{{ route('admin.assign-task.create') }}">
             Add Assign Task
         </a>
     </div>
@@ -61,7 +61,7 @@
 @endif
 
 <div class="card">
-    <div class="card-header">Task List</div>
+    <div class="card-header">Task Assign List</div>
     <div class="card-body">
         <div class="table-responsive">
             <table class="table table-bordered table-striped table-hover datatable">
@@ -108,13 +108,13 @@
                                 @endif
 
                                 @can('task_assign_edit')
-                                    <a class="btn btn-xs btn-info" href="{{ route('admin.task-assign.edit', $data->id) }}">
+                                    <a class="btn btn-xs btn-info" href="{{ route('admin.assign-task.edit', $data->id) }}">
                                         Edit
                                     </a>
                                 @endcan
 
                                 @can('task_assign_delete')
-                                    <form action="{{ route('admin.task-assign.destroy', $data->id) }}" method="POST" onsubmit="return confirm('{{ trans('global.areYouSure') }}');" style="display: inline-block;">
+                                    <form action="{{ route('admin.assign-task.destroy', $data->id) }}" method="POST" onsubmit="return confirm('{{ trans('global.areYouSure') }}');" style="display: inline-block;">
                                         @csrf
                                         @method('DELETE')
                                         <input type="submit" class="btn btn-xs btn-danger" value="Delete">

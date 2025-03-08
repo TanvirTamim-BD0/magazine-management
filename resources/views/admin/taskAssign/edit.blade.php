@@ -48,7 +48,7 @@
     </div>
 
     <div class="card-body">
-        <form method="POST" action="{{ route("admin.task-assign.update", [$taskAssignData->id]) }}" enctype="multipart/form-data">
+        <form method="POST" action="{{ route("admin.assign-task.update", [$taskAssignData->id]) }}" enctype="multipart/form-data">
             @method('PUT')
             @csrf
             
