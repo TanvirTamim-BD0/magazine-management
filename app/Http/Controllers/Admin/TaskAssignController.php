@@ -8,6 +8,7 @@ use App\Models\TaskAssign;
 use App\Models\User;
 use Auth;
 use Carbon\Carbon;
+use Karim007\LaravelSslwirlessSms\Facade\SslWirlessSms;
 
 class TaskAssignController extends Controller
 {
@@ -55,7 +56,17 @@ class TaskAssignController extends Controller
         $data = $request->all();
         $data['user_id'] = Auth::user()->id;
         
-        if(TaskAssign::create($data)){
+        if($assign = TaskAssign::create($data)){
+
+            $assignToData = User::where('id',$assign->assign_to)->first();
+            $assignByData = User::where('id',$assign->user_id)->first();
+
+            $phone_number = $assignToData->phone; // msisdn must be array
+            $messageBody = 'Dear '.$assignToData->name.', You have been assigned a new task. Please review the details Your Dashboard: Please complete the task on time and update your progress accordingly. Best regards, '.$assignByData->name.'';
+
+            $customer_smsId = uniqid();
+            SslWirlessSms::singleSms($phone_number,$messageBody,$customer_smsId);
+
             return redirect()->back()->with('message','Successfully Task Assign Created');
         }else{
             return redirect()->back();

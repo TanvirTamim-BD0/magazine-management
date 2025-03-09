@@ -129,7 +129,6 @@
                                     <th>Image</th>
                                     <th>Verify Code</th>
                                     <th>Send Status</th>
-                                    <th>Receive Status</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -146,23 +145,14 @@
                             <td>
                                 @if($data->send_status == 'Pending')
                                 <span class="btn btn-sm btn-warning text-white">{{ $data->send_status ?? '' }}</span>
-
                                 <a href="{{route('admin.magazine-send-status',$data->id)}}" class="btn btn-sm btn-success text-white mt-1"><i class="fa fa-arrow-up" aria-hidden="true"></i></a>
+                                @elseif($data->send_status == 'Sending Complete')
+                                <span class="btn btn-sm btn-info text-white">{{ $data->send_status ?? '' }}</span>
+                                <a href="{{route('admin.magazine-receive-status',$data->id)}}" class="btn btn-sm btn-success text-white mt-1"><i class="fa fa-arrow-up" aria-hidden="true"></i></a>
                                 @else
                                 <span class="btn btn-sm btn-success text-white">{{ $data->send_status ?? '' }}</span>
                                 @endif
                             </td>
-
-                            <td>
-                                @if($data->receive_status == 'Pending')
-                                <span class="btn btn-sm btn-warning text-white">{{ $data->receive_status ?? '' }}</span>
-
-                                <a href="{{route('admin.magazine-receive-status',$data->id)}}" class="btn btn-sm btn-success text-white mt-1"><i class="fa fa-arrow-up" aria-hidden="true"></i></a>
-                                @else
-                                <span class="btn btn-sm btn-success text-white">{{ $data->receive_status ?? '' }}</span>
-                                @endif
-                            </td>
-
                         </tr>
                     @endforeach
                             </tbody>

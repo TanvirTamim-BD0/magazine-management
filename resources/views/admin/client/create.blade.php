@@ -53,8 +53,13 @@
             </div>
 
             <div class="form-group">
-                <label class="required" for="area_code">Area Code</label>
-                <input class="form-control {{ $errors->has('area_code') ? 'is-invalid' : '' }}" type="text" name="area_code" id="area_code" value="{{ old('area_code', '') }}" required>
+                    <label for="area_code">Area Code</label>
+                        <select class="form-control select2 {{ $errors->has('area_code') ? 'is-invalid' : '' }}" name="area_code">
+                            <option selected disabled></option>
+                            @foreach($areaCodeData as $areaCode)
+                            <option value="{{$areaCode->id}}">{{$areaCode->name}}</option>
+                            @endforeach
+                        </select>
             </div>
 
 

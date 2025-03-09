@@ -16,7 +16,7 @@ class MagazineVerifyController extends Controller
     {
     	$data = MagazineSend::where('verify_code',$request->verify_code)->first();
     	if (isset($data)) {
-    		$data->receive_status = 'Received';
+    		$data->send_status = 'Received';
     		$data->save();
     		return redirect()->back()->with('message','Successfully verified.');
     	}else{

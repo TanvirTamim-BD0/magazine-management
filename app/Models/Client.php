@@ -35,4 +35,9 @@ class Client extends Model
         return $this->belongsTo(Company::class,'company_id');
     }
 
+    public function areaCodeData()
+    {
+        return $this->belongsTo(AreaCode::class,'area_code');
+    }
+
 }

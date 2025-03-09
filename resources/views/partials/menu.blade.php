@@ -16,13 +16,24 @@
             </a>
         </li>
 
-            <li class="c-sidebar-nav-dropdown {{ request()->is("admin/client*") ? "c-show" : "" }} {{ request()->is("admin/magazine-send*") ? "c-show" : "" }} {{ request()->is("admin/magazine*") ? "c-show" : "" }} {{ request()->is("admin/designation*") ? "c-show" : "" }} {{ request()->is("admin/company*") ? "c-show" : "" }}">
+            <li class="c-sidebar-nav-dropdown {{ request()->is("admin/client*") ? "c-show" : "" }} {{ request()->is("admin/magazine-send*") ? "c-show" : "" }} {{ request()->is("admin/magazine*") ? "c-show" : "" }} {{ request()->is("admin/designation*") ? "c-show" : "" }} {{ request()->is("admin/company*") ? "c-show" : "" }} {{ request()->is("admin/area-code*") ? "c-show" : "" }} {{ request()->is("admin/magazine-overview*") ? "c-show" : "" }}">
                 <a class="c-sidebar-nav-dropdown-toggle" href="#">
                     <i class="fa fa-book c-sidebar-nav-icon icon-size">
                         </i>
                     Magazine Management
                 </a>
                 <ul class="c-sidebar-nav-dropdown-items">
+
+                    @if(Auth::user()->role == 'Admin')
+                        <li class="c-sidebar-nav-item">
+                            <a href="{{ route("admin.magazine-overview") }}" class="c-sidebar-nav-link {{ request()->is("admin/magazine-overview") ? "c-active" : "" }}">
+                                <i class="fa fa-circle-thin c-sidebar-nav-icon">
+
+                                </i>
+                                Magazine Overview
+                            </a>
+                        </li>
+                    @endif
 
                     @can('client_access')
                         <li class="c-sidebar-nav-item">
@@ -57,13 +68,13 @@
                         </li>
                     @endcan
 
-                    @can('designation_access')
+                    @can('company_access')
                         <li class="c-sidebar-nav-item">
-                            <a href="{{ route("admin.designation.index") }}" class="c-sidebar-nav-link {{ request()->is("admin/designation") || request()->is("admin/designation/*") ? "c-active" : "" }}">
+                            <a href="{{ route("admin.area-code.index") }}" class="c-sidebar-nav-link {{ request()->is("admin/area-code") || request()->is("admin/area-code/*") ? "c-active" : "" }}">
                                 <i class="fa fa-circle-thin c-sidebar-nav-icon">
 
                                 </i>
-                                Designation
+                                Area Code
                             </a>
                         </li>
                     @endcan
@@ -75,6 +86,17 @@
 
                                 </i>
                                 Company
+                            </a>
+                        </li>
+                    @endcan
+
+                    @can('designation_access')
+                        <li class="c-sidebar-nav-item">
+                            <a href="{{ route("admin.designation.index") }}" class="c-sidebar-nav-link {{ request()->is("admin/designation") || request()->is("admin/designation/*") ? "c-active" : "" }}">
+                                <i class="fa fa-circle-thin c-sidebar-nav-icon">
+
+                                </i>
+                                Designation
                             </a>
                         </li>
                     @endcan

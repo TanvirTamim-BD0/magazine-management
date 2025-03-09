@@ -8,6 +8,7 @@ use App\Models\Client;
 use App\Models\Designation;
 use App\Models\Company;
 use Auth;
+use App\Models\AreaCode;
 
 class ClientController extends Controller
 {
@@ -21,7 +22,8 @@ class ClientController extends Controller
     {	
     	$designationData = Designation::all();
     	$companyData = Company::all();
-        return view('admin.client.create',compact('designationData','companyData'));
+        $areaCodeData = AreaCode::all();
+        return view('admin.client.create',compact('designationData','companyData','areaCodeData'));
     }
 
     public function store(Request $request)
@@ -45,7 +47,8 @@ class ClientController extends Controller
         $clientData = Client::where('id',$id)->first();
         $designationData = Designation::all();
     	$companyData = Company::all();
-        return view('admin.client.edit',compact('clientData','designationData','companyData'));
+        $areaCodeData = AreaCode::all();
+        return view('admin.client.edit',compact('clientData','designationData','companyData','areaCodeData'));
     }
 
     public function update(Request $request,$id){

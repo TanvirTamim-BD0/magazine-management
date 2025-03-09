@@ -40,4 +40,12 @@ class MagazineSend extends Model
         return $data;
     }
 
+    public static function getSingleMagazine($clientId)
+    {
+        $data = MagazineSend::where('client_id', $clientId)->orderBy('id','desc')->first();
+        
+        return $data;
+    }
+    
+
 }

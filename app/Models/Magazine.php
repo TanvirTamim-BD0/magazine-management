@@ -20,4 +20,23 @@ class Magazine extends Model
         return $this->belongsTo(User::class,'user_id');
     }
 
+
+    public static function pendingMagazinesCount($magazineId)
+    {
+        $data = MagazineSend::where('magazine_id', $magazineId)->where('send_status','Pending')->count();
+        return $data;
+    }
+
+    public static function sendingMagazinesCount($magazineId)
+    {
+        $data = MagazineSend::where('magazine_id', $magazineId)->where('send_status','Sending Complete')->count();
+        return $data;
+    }
+
+    public static function receiveMagazinesCount($magazineId)
+    {
+        $data = MagazineSend::where('magazine_id', $magazineId)->where('send_status','Received')->count();
+        return $data;
+    }
+
 }

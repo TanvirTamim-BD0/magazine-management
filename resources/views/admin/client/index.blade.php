@@ -67,26 +67,32 @@
                             <td>{{ $data->address ?? '' }}</td>
                             <td>{{ $data->email ?? '' }}</td>
                             <td>{{ $data->phone ?? '' }}</td>
-                            <td>{{ $data->area_code ?? '' }}</td>
+                            <td>{{ $data->areaCodeData->name ?? '' }}</td>
 
                             @php
                                 $getPendingMagazines = App\Models\MagazineSend::getPendingMagazine($data->id);
+                                $getSingleMagazine = App\Models\MagazineSend::getSingleMagazine($data->id);
                             @endphp
 
 
                             <td>
-                                <span style="color: #0e89a7">@if(isset($getPendingMagazines))
+                            @if(isset($getPendingMagazines))
+                                <span style="color: #0e89a7">
                                 {{$getPendingMagazines->magazineData->name ?? ''}}</span><br>
-
                                 @if($getPendingMagazines->send_status == 'Pending')
                                 <span class="btn btn-sm btn-warning text-white">{{ $getPendingMagazines->send_status ?? '' }}</span>
 
                                 <a href="{{route('admin.magazine-send-status',$getPendingMagazines->id)}}" class="btn btn-sm btn-success text-white mt-1"><i class="fa fa-arrow-up"></i></a>
                                 @else
-                                <span class="btn btn-sm btn-success text-white">{{ $getPendingMagazines->send_status ?? '' }}</span>
+                                    @if(isset($getSingleMagazine))
+                                        @if($getSingleMagazine->send_status == 'Sending Complete')
+                                        <span class="btn btn-sm btn-warning text-white">{{ $getPendingMagazines->send_status ?? '' }}</span>
+                                        @else
+                                        <span class="btn btn-sm btn-success text-white">{{ $getPendingMagazines->send_status ?? '' }}</span>
+                                        @endif
+                                    @endif
                                 @endif
-                                @else
-                                @endif
+                            @endif
                             </td>
                             
                             <td>

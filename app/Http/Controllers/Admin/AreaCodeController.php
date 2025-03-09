@@ -4,20 +4,20 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\Company;
+use App\Models\AreaCode;
 use Auth;
 
-class CompanyController extends Controller
+class AreaCodeController extends Controller
 {
     public function index()
     {   
-        $companyData = Company::orderBy('id','desc')->get();
-        return view('admin.company.index',compact('companyData'));
+        $areaCodeData = AreaCode::orderBy('id','desc')->get();
+        return view('admin.areaCode.index',compact('areaCodeData'));
     }
 
     public function create()
     {
-        return view('admin.company.create');
+        return view('admin.areaCode.create');
     }
 
     public function store(Request $request)
@@ -29,8 +29,8 @@ class CompanyController extends Controller
         $data = $request->all();
         $data['user_id'] = Auth::user()->id;
         
-        if(Company::create($data)){
-            return redirect()->route('admin.company.index')->with('message','Successfully Company Created');
+        if(AreaCode::create($data)){
+            return redirect()->route('admin.area-code.index')->with('message','Successfully Area Code Created');
         }else{
             return redirect()->back();
         }
@@ -38,8 +38,8 @@ class CompanyController extends Controller
 
     public function edit($id)
     {   
-        $companyData = Company::where('id',$id)->first();
-        return view('admin.company.edit',compact('companyData'));
+        $areaCodeData = AreaCode::where('id',$id)->first();
+        return view('admin.areaCode.edit',compact('areaCodeData'));
     }
 
     public function update(Request $request,$id){
@@ -51,9 +51,9 @@ class CompanyController extends Controller
 
         $data = $request->all();
     
-        $companyData = Company::find($id);
-        if($companyData->update($data)){
-            return redirect(route('admin.company.index'))->with('message','Successfully Company Updated');
+        $areaCodeData = AreaCode::find($id);
+        if($areaCodeData->update($data)){
+            return redirect(route('admin.area-code.index'))->with('message','Successfully Area Code Updated');
         }else{
             return redirect()->back()->with('error','Error !! Update Failed');;
         }
@@ -62,10 +62,10 @@ class CompanyController extends Controller
 
     public function destroy($id)
     {
-        $companyData = Company::find($id);
-        if($companyData->delete()){
+        $areaCodeData = AreaCode::find($id);
+        if($areaCodeData->delete()){
 
-            return redirect(route('admin.company.index'))->with('message','Successfully Company Deleted');
+            return redirect(route('admin.area-code.index'))->with('message','Successfully Area Code Deleted');
         }else{
             return redirect()->back()->with('error','Error !! Delete Failed');
         }

@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use App\Models\Notice;
 use Auth;
 use Carbon\Carbon;
+use App\Models\User;
+use Karim007\LaravelSslwirlessSms\Facade\SslWirlessSms;
 
 class NoticeController extends Controller
 {
@@ -40,6 +42,14 @@ class NoticeController extends Controller
         	}
         
         if(Notice::create($data)){
+
+            $userPhone = User::pluck('phone')->toArray();
+
+            $phone_number = $userPhone;
+            $messageBody = "Dear All, A new notice has been issued. Please check it at your earliest convenience.  BCMEA";
+            $batchCustomerSmsId = uniqid();
+            SslWirlessSms::bulkSms($phone_number,$messageBody,$batchCustomerSmsId);
+
             return redirect()->route('admin.notice.index')->with('message','Successfully Notice Created');
         }else{
             return redirect()->back();

@@ -30,11 +30,13 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::resource('category', 'CategoryController');
     Route::resource('company', 'CompanyController');
     Route::resource('designation', 'DesignationController');
+    Route::resource('area-code', 'AreaCodeController');
 
     Route::resource('client', 'ClientController');
     Route::resource('magazine', 'MagazineController');
     Route::resource('magazine-send', 'MagazineSendController');
     
+    Route::get('magazine-overview', [App\Http\Controllers\Admin\MagazineSendController::class, 'magazineOverview'])->name('magazine-overview');
     Route::get('client-magazine/{id}', [App\Http\Controllers\Admin\MagazineSendController::class, 'clientMagazine'])->name('client.magazine');
     Route::get('magazine-send-status/{id}', [App\Http\Controllers\Admin\MagazineSendController::class, 'magazineSendStatus'])->name('magazine-send-status');
     Route::get('magazine-receive-status/{id}', [App\Http\Controllers\Admin\MagazineSendController::class, 'magazineReceiveStatus'])->name('magazine-receive-status');
