@@ -15,7 +15,7 @@
                 Dashboard
             </a>
         </li>
-
+            @can('magazine_management_access')
             <li class="c-sidebar-nav-dropdown {{ request()->is("admin/client*") ? "c-show" : "" }} {{ request()->is("admin/magazine-send*") ? "c-show" : "" }} {{ request()->is("admin/magazine*") ? "c-show" : "" }} {{ request()->is("admin/designation*") ? "c-show" : "" }} {{ request()->is("admin/company*") ? "c-show" : "" }} {{ request()->is("admin/area-code*") ? "c-show" : "" }} {{ request()->is("admin/magazine-overview*") ? "c-show" : "" }}">
                 <a class="c-sidebar-nav-dropdown-toggle" href="#">
                     <i class="fa fa-book c-sidebar-nav-icon icon-size">
@@ -102,6 +102,7 @@
                     @endcan
                 </ul>
             </li>
+            @endcan
 
 
             @can('task_access')

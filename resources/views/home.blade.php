@@ -277,12 +277,21 @@
 
 <!-- Statistics and Charts Section -->
 <div class="row text-center">
+    @if(Auth::user()->role == 'Admin')
     <div class="col-md-2 col-6 stat-box"><a href="{{ route("admin.task.index") }}" class="text-white">Total Task</a> <h3>{{ $totalTasks }}</h3></div>
     <div class="col-md-2 col-6 stat-box"><a href="{{ route("admin.task.today") }}" class="text-white"> Today's Task </a><h3>{{ $todaysTasks }}</h3></div>
     <div class="col-md-2 col-6 stat-box"><a href="{{ route("admin.task.pending") }}" class="text-white"> Pending Task </a><h3>{{ $pendingTasks }}</h3></div>
     <div class="col-md-2 col-6 stat-box"><a href="{{ route("admin.tasks.completed") }}" class="text-white"> Completed Task</a><h3>{{ $completedTasks }}</h3></div>
     <div class="col-md-2 col-6 stat-box"><a href="{{ route("admin.client.index") }}" class="text-white"> Total Client </a><h3>{{ $totalClients }}</h3></div>
     <div class="col-md-2 col-6 stat-box"><a href="{{ route('admin.notice.index') }}" class="text-white"> Notice Board </a><h3>{{ $notices }}</h3></div>
+    @else
+    <div class="col-md-2 col-6 stat-box"><a class="text-white">Total Task</a> <h3>{{ $totalTasks }}</h3></div>
+    <div class="col-md-2 col-6 stat-box"><a class="text-white"> Today's Task </a><h3>{{ $todaysTasks }}</h3></div>
+    <div class="col-md-2 col-6 stat-box"><a class="text-white"> Pending Task </a><h3>{{ $pendingTasks }}</h3></div>
+    <div class="col-md-2 col-6 stat-box"><a class="text-white"> Completed Task</a><h3>{{ $completedTasks }}</h3></div>
+    <div class="col-md-2 col-6 stat-box"><a class="text-white"> Total Client </a><h3>{{ $totalClients }}</h3></div>
+    <div class="col-md-2 col-6 stat-box"><a class="text-white"> Notice Board </a><h3>{{ $notices }}</h3></div>
+    @endif
 </div>
 
 <!-- Task Charts Section -->

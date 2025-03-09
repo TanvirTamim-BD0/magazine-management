@@ -43,6 +43,7 @@ class PermissionsTableSeeder extends Seeder
             ['title' => 'client_create'],
             ['title' => 'client_edit'],
             ['title' => 'client_delete'],
+            ['title' => 'magazine_management_access'],
             ['title' => 'task_access'],
             ['title' => 'task_create'],
             ['title' => 'task_edit'],
