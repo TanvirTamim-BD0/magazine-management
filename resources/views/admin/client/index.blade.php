@@ -83,14 +83,16 @@
                                 <span class="btn btn-sm btn-warning text-white">{{ $getPendingMagazines->send_status ?? '' }}</span>
 
                                 <a href="{{route('admin.magazine-send-status',$getPendingMagazines->id)}}" class="btn btn-sm btn-success text-white mt-1"><i class="fa fa-arrow-up"></i></a>
-                                @else
-                                    @if(isset($getSingleMagazine))
+                                @endif
+                            @else
+                                @if(isset($getSingleMagazine))
+                                    <span style="color: #0e89a7">
+                                    {{$getSingleMagazine->magazineData->name ?? ''}}</span><br>
                                         @if($getSingleMagazine->send_status == 'Sending Complete')
-                                        <span class="btn btn-sm btn-warning text-white">{{ $getPendingMagazines->send_status ?? '' }}</span>
+                                        <span class="btn btn-sm btn-info text-white">{{ $getSingleMagazine->send_status ?? '' }}</span>
                                         @else
-                                        <span class="btn btn-sm btn-success text-white">{{ $getPendingMagazines->send_status ?? '' }}</span>
+                                        <span class="btn btn-sm btn-success text-white">{{ $getSingleMagazine->send_status ?? '' }}</span>
                                         @endif
-                                    @endif
                                 @endif
                             @endif
                             </td>

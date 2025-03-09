@@ -17,12 +17,9 @@ class TaskAssignController extends Controller
         if(Auth::user()->role == 'Admin'){
             $taskAssignData = TaskAssign::orderBy('id','desc')->get();
         	$users = User::orderBy('id','desc')->get();
-        }elseif(Auth::user()->role == 'User'){
+        }else{
             $taskAssignData = TaskAssign::where('assign_to',Auth::user()->id)->orderBy('id', 'desc')->get();
             $users = User::orderBy('id','desc')->get();
-        }else{
-            $taskAssignData = [];
-            $users = [];
         }
 
         return view('admin.taskAssign.index',compact('taskAssignData','users'));
@@ -33,12 +30,9 @@ class TaskAssignController extends Controller
         if(Auth::user()->role == 'Admin'){
             $taskAssignData = TaskAssign::orderBy('id','desc')->get();
         	$users = User::orderBy('id','desc')->get();
-        }elseif(Auth::user()->role == 'User'){
+        }else{
             $taskAssignData = TaskAssign::where('user_id',Auth::user()->id)->orderBy('id', 'desc')->get();
             $users = User::orderBy('id','desc')->get();
-        }else{
-            $taskAssignData = [];
-            $users = [];
         }
 
         return view('admin.taskAssign.index',compact('taskAssignData','users'));
