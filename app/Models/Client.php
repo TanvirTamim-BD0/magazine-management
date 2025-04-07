@@ -12,6 +12,7 @@ class Client extends Model
     protected $fillable = [
         'user_id',
         'name',
+        'category_id',
         'designation_id',
         'company_id',
         'address',
@@ -33,6 +34,11 @@ class Client extends Model
     public function companyData()
     {
         return $this->belongsTo(Company::class,'company_id');
+    }
+
+    public function categoryData()
+    {
+        return $this->belongsTo(Category::class,'category_id');
     }
 
     public function areaCodeData()

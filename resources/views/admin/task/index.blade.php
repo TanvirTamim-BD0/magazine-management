@@ -155,7 +155,7 @@
                             <td>{{ $data->assignData->name ?? '' }}</td>
                             <td>{{ $data->deadline ?? '' }}</td>
                             <td>{{ $data->priority ?? '' }}</td>
-                            <td>{{ $data->remark ?? '' }}</td>
+                            <td>{!! $data->remark ?? '' !!}</td>
                             <td>{{ $data->admin_comment ?? '' }}</td>
                             <td>
                                 @if($data->status == 'Pending')

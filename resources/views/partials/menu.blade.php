@@ -16,7 +16,7 @@
             </a>
         </li>
             @can('magazine_management_access')
-            <li class="c-sidebar-nav-dropdown {{ request()->is("admin/client*") ? "c-show" : "" }} {{ request()->is("admin/magazine-send*") ? "c-show" : "" }} {{ request()->is("admin/magazine*") ? "c-show" : "" }} {{ request()->is("admin/designation*") ? "c-show" : "" }} {{ request()->is("admin/company*") ? "c-show" : "" }} {{ request()->is("admin/area-code*") ? "c-show" : "" }} {{ request()->is("admin/magazine-overview*") ? "c-show" : "" }}">
+            <li class="c-sidebar-nav-dropdown {{ request()->is("admin/client*") ? "c-show" : "" }} {{ request()->is("admin/magazine-send*") ? "c-show" : "" }} {{ request()->is("admin/magazine*") ? "c-show" : "" }} {{ request()->is("admin/designation*") ? "c-show" : "" }} {{ request()->is("admin/company*") ? "c-show" : "" }} {{ request()->is("admin/area-code*") ? "c-show" : "" }} {{ request()->is("admin/magazine-overview*") ? "c-show" : "" }} {{ request()->is("admin/category*") ? "c-show" : "" }}">
                 <a class="c-sidebar-nav-dropdown-toggle" href="#">
                     <i class="fa fa-book c-sidebar-nav-icon icon-size">
                         </i>
@@ -74,7 +74,18 @@
                                 <i class="fa fa-circle-thin c-sidebar-nav-icon">
 
                                 </i>
-                                Area Code
+                                Area
+                            </a>
+                        </li>
+                    @endcan
+
+                    @can('category_access')
+                        <li class="c-sidebar-nav-item">
+                            <a href="{{ route("admin.category.index") }}" class="c-sidebar-nav-link {{ request()->is("admin/category") || request()->is("admin/category/*") ? "c-active" : "" }}">
+                                <i class="fa fa-circle-thin c-sidebar-nav-icon">
+
+                                </i>
+                                Category
                             </a>
                         </li>
                     @endcan

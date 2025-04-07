@@ -17,6 +17,16 @@
             </div>
 
             <div class="form-group">
+                    <label for="category_id">Category</label>
+                        <select class="form-control select2 {{ $errors->has('category_id') ? 'is-invalid' : '' }}" name="category_id">
+                            <option selected disabled></option>
+                            @foreach($categoryData as $category)
+                            <option value="{{$category->id}}" {{$category->id == $clientData->category_id ? 'selected' : ''}} >{{$category->name}}</option>
+                            @endforeach
+                        </select>
+            </div>
+
+            <div class="form-group">
                     <label for="designation_id">Designation</label>
                         <select class="form-control select2 {{ $errors->has('designation_id') ? 'is-invalid' : '' }}" name="designation_id">
                             <option selected disabled></option>
@@ -54,7 +64,7 @@
             </div>
 
             <div class="form-group">
-                    <label for="area_code">Area Code</label>
+                    <label for="area_code">Area</label>
                         <select class="form-control select2 {{ $errors->has('area_code') ? 'is-invalid' : '' }}" name="area_code">
                             <option selected disabled></option>
                             @foreach($areaCodeData as $areaCode)

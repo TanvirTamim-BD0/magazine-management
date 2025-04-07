@@ -4,14 +4,14 @@
     <div style="margin-bottom: 10px;" class="row">
         <div class="col-lg-12">
             <a class="btn btn-success" href="{{ route('admin.area-code.create') }}">
-                Add Area Code
+                Add Area
             </a>
         </div>
     </div>
 @endcan
 <div class="card">
     <div class="card-header">
-        Area Code List
+        Area List
     </div>
 
     <div class="card-body">

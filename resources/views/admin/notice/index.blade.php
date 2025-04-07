@@ -53,7 +53,7 @@
                                 {{ $data->title ?? '' }}
                             </td>
                             <td>
-                                {{ $data->description ?? '' }}
+                                {!! $data->description ?? '' !!}
                             </td>
                             <td>
                                 @if(isset($data->image))

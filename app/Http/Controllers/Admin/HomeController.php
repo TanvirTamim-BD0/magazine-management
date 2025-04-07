@@ -23,9 +23,9 @@ class HomeController
             $pendingTasks = Task::where('user_id',Auth::user()->id)->where('status', 'pending')->count();
             $completedTasks = Task::where('user_id',Auth::user()->id)->where('status', 'completed')->count();
             $todaysTasks = Task::where('user_id',Auth::user()->id)->whereDate('created_at', today())->count(); 
+            $totalClients = Client::where('user_id',Auth::user()->id)->count();
         }
 
-        $totalClients = Client::count();
 	    $notices = Notice::count(); 
 	    $noticeFirst = Notice::latest()->first();
         return view('home',compact('totalTasks','pendingTasks','completedTasks','todaysTasks','pendingTasks','totalClients','notices','noticeFirst'));

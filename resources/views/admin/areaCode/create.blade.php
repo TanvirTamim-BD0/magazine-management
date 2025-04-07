@@ -4,7 +4,7 @@
 <div class="d-flex justify-content-center align-items-center">
 <div class="card" style="width: 45rem;">
     <div class="card-header">
-        Create Area Code
+        Create Area
     </div>
 
     <div class="card-body">

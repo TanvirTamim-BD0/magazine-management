@@ -9,13 +9,18 @@ use App\Models\Designation;
 use App\Models\Company;
 use Auth;
 use App\Models\AreaCode;
+use App\Models\Category;
 
 class ClientController extends Controller
 {
     public function index()
     {   
         $clientData = Client::orderBy('id','desc')->get();
-        return view('admin.client.index',compact('clientData'));
+        $companies = Company::all();
+        $areas = AreaCode::all();
+        $categories = Category::all();
+        $designations = Designation::all();
+        return view('admin.client.index',compact('clientData','companies','areas','categories','designations'));
     }
 
     public function create()
@@ -23,7 +28,8 @@ class ClientController extends Controller
     	$designationData = Designation::all();
     	$companyData = Company::all();
         $areaCodeData = AreaCode::all();
-        return view('admin.client.create',compact('designationData','companyData','areaCodeData'));
+        $categoryData = Category::all();
+        return view('admin.client.create',compact('designationData','companyData','areaCodeData','categoryData'));
     }
 
     public function store(Request $request)
@@ -48,7 +54,8 @@ class ClientController extends Controller
         $designationData = Designation::all();
     	$companyData = Company::all();
         $areaCodeData = AreaCode::all();
-        return view('admin.client.edit',compact('clientData','designationData','companyData','areaCodeData'));
+        $categoryData = Category::all();
+        return view('admin.client.edit',compact('clientData','designationData','companyData','areaCodeData','categoryData'));
     }
 
     public function update(Request $request,$id){
@@ -84,7 +91,11 @@ class ClientController extends Controller
     public function clientDataExport()
     {
         $clientData = Client::orderBy('id','desc')->get();
-        return view('admin.client.clientReport',compact('clientData'));
+        $companies = Company::all();
+        $areas = AreaCode::all();
+        $categories = Category::all();
+        $designations = Designation::all();
+        return view('admin.client.clientReport',compact('clientData','companies','areas','categories','designations'));
     }
 
     public function areaFilter(Request $request)

@@ -1,118 +1,198 @@
 @extends('layouts.admin')
 @section('content')
-    <style>
-        .container {
-            background: #fff;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            max-width: 100%; /* Full width to fit 5 columns */
-            margin: auto;
-            padding: 20px;
-        }
-        .print-btn {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin: 0 auto 20px;
-            padding: 10px 15px;
-            font-size: 16px;
-            cursor: pointer;
-            background: #007bff;
-            color: white;
-            border: none;
-            border-radius: 5px;
-        }
-        .print-btn i {
-            margin-right: 8px;
-        }
-        .contact-list {
-            display: grid;
-            grid-template-columns: repeat(5, 1fr); /* 5 columns */
-            gap: 15px;
-        }
-        .contact-item {
-            padding: 10px;
-            border: 1px solid #ddd;
-            border-radius: 8px;
-            background: #f9f9f9;
-            text-align: center;
-            transition: transform 0.2s ease-in-out;
-            font-size: 14px; /* Adjust font size for better fit */
-        }
-        .contact-item:hover {
-            transform: scale(1.02);
-        }
-        h5 {
-            margin-bottom: 5px;
-            color: #007bff;
-        }
-        p {
+<style>
+    .container {
+        background: #fff;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        max-width: 100%;
+        margin: auto;
+    }
+
+    .print-btn {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto 20px;
+        padding: 10px 15px;
+        font-size: 16px;
+        cursor: pointer;
+        background: #007bff;
+        color: white;
+        border: none;
+        border-radius: 5px;
+    }
+
+    .print-btn i {
+        margin-right: 8px;
+    }
+
+    .filter-form {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 10px;
+        margin-bottom: 20px;
+    }
+
+    .filter-form select {
+        padding: 8px;
+        min-width: 200px;
+        border-radius: 5px;
+        border: 1px solid #ccc;
+    }
+
+    .contact-list {
+        display: grid;
+        grid-template-columns: repeat(5, 1fr);
+        gap: 15px;
+    }
+
+    .contact-item {
+        padding: 10px;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        background: #f9f9f9;
+        text-align: left;
+        transition: transform 0.2s ease-in-out;
+        font-size: 14px;
+    }
+
+    .contact-item:hover {
+        transform: scale(1.02);
+    }
+
+    h5 {
+        margin-bottom: 5px;
+        color: #007bff;
+    }
+
+    p {
+        margin: 0;
+        line-height: 1.4;
+    }
+
+    @media print {
+        @page {
+            size: A4 landscape;
             margin: 0;
-            line-height: 1.4;
         }
 
-        .filter-form {
-            display: flex;
-            justify-content: center;
-            margin-bottom: 20px;
+        body * {
+            visibility: hidden;
         }
-        .filter-form input, .filter-form button {
-            padding: 8px;
-            margin-right: 10px;
-            border-radius: 5px;
-            border: 1px solid #ccc;
+
+        .contact-list, .contact-list * {
+            visibility: visible;
         }
-        
-        /* PRINT STYLING */
-        @media print {
-            @page {
-                size: A4 landscape; /* Force landscape printing */
-                margin: 0; /* Remove margins */
-            }
-            body * {
-                visibility: hidden; /* Hide everything */
-            }
-            .contact-list, .contact-list * {
-                visibility: visible; /* Show only contact list */
-            }
-            .contact-list {
-                margin-top: 15px;
-                position: absolute;
-                left: 0;
-                top: 0;
-                width: 100%;
-                background: none;
-                border: none;
-                box-shadow: none;
-            }
-            .print-btn {
-                display: none; /* Hide print button */
-            }
+
+        .contact-list {
+            margin-top: 15px;
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 100%;
+            background: none;
+            border: none;
+            box-shadow: none;
         }
-    </style>
 
-    <div class="container">
+        .print-btn, .filter-form {
+            display: none;
+        }
+    }
+</style>
 
-        <!-- Filter Form -->
-        <form class="filter-form" method="POST" action="{{ route("admin.area.filter") }}">
-            @csrf
-            <input type="text" name="area_code" placeholder="Enter Area Code" required>
-            <button type="submit"> <i class="fa fa-filter" aria-hidden="true"></i> Filter</button>
-        </form>
+<div class="container">
+    <!-- Print Button -->
+    <button class="print-btn" onclick="window.print()">
+        <i class="fas fa-print"></i> Print
+    </button>
 
-        <button class="print-btn" onclick="window.print()">
-            <i class="fas fa-print"></i> Print
-        </button>
-        <div class="contact-list">
-            @foreach($clientData as $client)
-                <div class="contact-item">
-                    <h5>To:</h5>
-                    <p><strong>{{ $client->name ?? ''}}</strong><br>
-                        {{ $client->designationData->name ?? ''}}, {{ $client->companyData->name ?? ''}}<br>
-                        {{ $client->address ?? ''}}</p>
-                </div>
+    <!-- Filters -->
+    <div class="filter-form">
+        <select id="filter-category">
+            <option value="">Filter by Category</option>
+            @foreach($categories as $category)
+                <option value="{{ $category->name }}">{{ $category->name }}</option>
             @endforeach
-        </div>
-    </div><br><br>
+        </select>
+
+        <select id="filter-designation">
+            <option value="">Filter by Designation</option>
+            @foreach($designations as $designation)
+                <option value="{{ $designation->name }}">{{ $designation->name }}</option>
+            @endforeach
+        </select>
+
+        <select id="filter-company">
+            <option value="">Filter by Company</option>
+            @foreach($companies as $company)
+                <option value="{{ $company->name }}">{{ $company->name }}</option>
+            @endforeach
+        </select>
+
+        <select id="filter-area">
+            <option value="">Filter by Area</option>
+            @foreach($areas as $area)
+                <option value="{{ $area->name }}">{{ $area->name }}</option>
+            @endforeach
+        </select>
+    </div>
+
+    <!-- Contact Cards -->
+    <div class="contact-list">
+        @foreach($clientData as $client)
+            <div class="contact-item"
+                data-category="{{ $client->categoryData->name ?? '' }}"
+                data-designation="{{ $client->designationData->name ?? '' }}"
+                data-company="{{ $client->companyData->name ?? '' }}"
+                data-area="{{ $client->areaCodeData->name ?? '' }}">
+                <h5>To:</h5>
+                <p>
+                    <strong>{{ $client->name ?? '' }}</strong><br>
+                    {{ $client->designationData->name ?? '' }}, {{ $client->companyData->name ?? '' }}<br>
+                    {{ $client->address ?? '' }}
+                </p>
+            </div>
+        @endforeach
+    </div>
+</div>
+@endsection
+
+@section('scripts')
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const filters = {
+            category: document.getElementById('filter-category'),
+            designation: document.getElementById('filter-designation'),
+            company: document.getElementById('filter-company'),
+            area: document.getElementById('filter-area')
+        };
+
+        const contactItems = document.querySelectorAll('.contact-item');
+
+        Object.values(filters).forEach(select => {
+            select.addEventListener('change', () => {
+                filterContacts();
+            });
+        });
+
+        function filterContacts() {
+            contactItems.forEach(item => {
+                const matchesCategory = filters.category.value === '' || item.dataset.category === filters.category.value;
+                const matchesDesignation = filters.designation.value === '' || item.dataset.designation === filters.designation.value;
+                const matchesCompany = filters.company.value === '' || item.dataset.company === filters.company.value;
+                const matchesArea = filters.area.value === '' || item.dataset.area === filters.area.value;
+
+                if (matchesCategory && matchesDesignation && matchesCompany && matchesArea) {
+                    item.style.display = '';
+                } else {
+                    item.style.display = 'none';
+                }
+            });
+        }
+    });
+</script>
 @endsection

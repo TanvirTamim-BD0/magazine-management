@@ -90,7 +90,7 @@
                             <td class="assign-to-column">{{ $data->assignData->name ?? '' }}</td>
                             <td>{{ $data->created_at ?? '' }}</td>
                             <td>{{ $data->deadline ?? '' }}</td>
-                            <td>{{ $data->remark ?? '' }}</td>
+                            <td>{!! $data->remark ?? '' !!}</td>
                             <td>{{ $data->reply_comment ?? '' }}</td>
                             <td>
                                 <span class="btn btn-sm {{ $data->status == 'Pending' ? 'btn-warning text-white' : 'btn-success text-white' }}">{{ $data->status }}</span>
