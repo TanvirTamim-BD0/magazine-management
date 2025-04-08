@@ -177,11 +177,23 @@
                                         Admin Comment
                                     </button>
                                 @endcan
+
+
                                 @can('task_edit')
+                                @if(Auth::user()->role == 'Admin' || Auth::user()->role == 'HR')
+                                <a class="btn btn-xs btn-info" href="{{ route('admin.task.edit', $data->id) }}">
+                                        Edit
+                                    </a>
+                                @else
+                                @if(\Carbon\Carbon::parse($data->created_at)->isToday())
                                     <a class="btn btn-xs btn-info" href="{{ route('admin.task.edit', $data->id) }}">
                                         Edit
                                     </a>
+                                @endif
+                                @endif
                                 @endcan
+
+
                                 @can('task_delete')
                                     <form action="{{ route('admin.task.destroy', $data->id) }}" method="POST" onsubmit="return confirm('{{ trans('global.areYouSure') }}');" style="display: inline-block;">
                                         @csrf
