@@ -36,6 +36,7 @@ class ClientController extends Controller
     {
         $request->validate([
             'name' => 'required',
+            'phone' => 'required|unique:clients',
         ]);
 
         $data = $request->all();

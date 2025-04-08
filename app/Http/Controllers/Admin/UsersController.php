@@ -77,14 +77,16 @@ class UsersController extends Controller
         return view('admin.users.show', compact('user'));
     }
 
-    public function destroy(User $user)
+    public function destroy($id)
     {
-        abort_if(Gate::denies('user_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        $user = User::find($id);
+        if($user->delete()){
 
-        $user->delete();
-
-        return back();
-    }
+            return redirect()->back()->with('message','Successfully User Deleted');
+        }else{
+            return redirect()->back()->with('error','Error !! Delete Failed');
+        }
+    }  
 
     public function massDestroy(MassDestroyUserRequest $request)
     {

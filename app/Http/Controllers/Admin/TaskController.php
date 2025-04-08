@@ -13,7 +13,7 @@ class TaskController extends Controller
 {
     public function index()
     {      
-        if(Auth::user()->role == 'Admin'){
+        if(Auth::user()->role == 'Admin' || Auth::user()->role == 'HR'){
             $taskData = Task::orderBy('id','desc')->get();
             $users = User::orderBy('id','desc')->get();
         }else{
@@ -41,7 +41,7 @@ class TaskController extends Controller
         $data['assign_date'] = Carbon::now()->toDateString();
         
         if(Task::create($data)){
-            return redirect()->back()->with('message','Successfully Task Created');
+            return redirect()->route('admin.task.index')->with('message','Successfully Task Created');
         }else{
             return redirect()->back();
         }
@@ -60,12 +60,11 @@ class TaskController extends Controller
             'name' => 'required',
         ]);
 
-
         $data = $request->all();
     
         $taskData = Task::find($id);
         if($taskData->update($data)){
-            return redirect()->back()->with('message','Successfully Task Updated');
+            return redirect()->route('admin.task.index')->with('message','Successfully Task Updated');
         }else{
             return redirect()->back()->with('error','Error !! Update Failed');;
         }
@@ -92,7 +91,7 @@ class TaskController extends Controller
 
     public function monthly()
     {   
-        if(Auth::user()->role == 'Admin'){
+        if(Auth::user()->role == 'Admin' || Auth::user()->role == 'HR'){
             $taskData = Task::whereMonth('created_at', Carbon::now()->month)->get();
             $users = User::orderBy('id','desc')->get();
         }else{
@@ -104,7 +103,7 @@ class TaskController extends Controller
 
     public function today()
     {   
-        if(Auth::user()->role == 'Admin'){
+        if(Auth::user()->role == 'Admin' || Auth::user()->role == 'HR'){
             $taskData = Task::whereDate('created_at', Carbon::today())->get();
             $users = User::orderBy('id','desc')->get();
         }else{
@@ -116,7 +115,7 @@ class TaskController extends Controller
 
     public function pending()
     {   
-        if(Auth::user()->role == 'Admin'){
+        if(Auth::user()->role == 'Admin' || Auth::user()->role == 'HR'){
             $taskData = Task::where('status', 'Pending')->get();
             $users = User::orderBy('id','desc')->get();
         }else{
@@ -128,7 +127,7 @@ class TaskController extends Controller
 
     public function completed()
     {   
-        if(Auth::user()->role == 'Admin'){
+        if(Auth::user()->role == 'Admin' || Auth::user()->role == 'HR'){
             $taskData = Task::where('status', 'Completed')->get();
             $users = User::orderBy('id','desc')->get();
         }else{

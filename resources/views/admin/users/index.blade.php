@@ -44,13 +44,13 @@
                 </thead>
                 <tbody>
                     @foreach($users as $key => $user)
+                    @if($user->name == 'Admin')
+                    @else
                         <tr data-entry-id="{{ $user->id }}">
                             <td>
 
                             </td>
-                            <td>
-                                {{ $user->id ?? '' }}
-                            </td>
+                            <td>{{ $loop->iteration }}</td>
                             <td>
                                 {{ $user->name ?? '' }}
                             </td>
@@ -72,6 +72,7 @@
                                     </a>
                                 @endcan
 
+                                
                                 @can('user_edit')
                                     <a class="btn btn-xs btn-info" href="{{ route('admin.users.edit', $user->id) }}">
                                         {{ trans('global.edit') }}
@@ -79,20 +80,18 @@
                                 @endcan
 
                                 @can('user_delete')
-                                @if($user->name == 'Admin')
-                                @else
                                 <form action="{{ route('admin.users.destroy', $user->id) }}" method="POST" onsubmit="return confirm('{{ trans('global.areYouSure') }}');" style="display: inline-block;">
                                         <input type="hidden" name="_method" value="DELETE">
                                         <input type="hidden" name="_token" value="{{ csrf_token() }}">
                                         <input type="submit" class="btn btn-xs btn-danger" value="{{ trans('global.delete') }}">
                                     </form>
-                                @endif
 
                                 @endcan
 
                             </td>
 
                         </tr>
+                        @endif
                     @endforeach
                 </tbody>
             </table>

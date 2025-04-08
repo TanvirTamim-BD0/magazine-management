@@ -216,7 +216,8 @@
                     @endcan
                     @endif
 
-                    @if(Auth::user()->role == 'User')
+                    @if(Auth::user()->role == 'Admin')
+                    @else
                     @can('task_assign_access')
                         <li class="c-sidebar-nav-item">
                             <a href="{{ route("admin.assign-task.index") }}" class="c-sidebar-nav-link {{ request()->is("admin/assign-task") || request()->is("admin/assign-task/*") ? "c-active" : "" }}">
@@ -229,7 +230,8 @@
                     @endcan
                     @endif
 
-                    @if(Auth::user()->role == 'User')
+                    @if(Auth::user()->role == 'Admin')
+                    @else
                     @can('task_assign_access')
                         <li class="c-sidebar-nav-item">
                             <a href="{{ route("admin.i-assigned-task") }}" class="c-sidebar-nav-link {{ request()->is("admin/i-assigned-task/*") || request()->is("admin/i-assigned-task") ? "c-active" : "" }}">

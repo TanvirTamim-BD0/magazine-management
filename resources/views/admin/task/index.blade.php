@@ -104,8 +104,8 @@
 @endcan
 
 <!-- Filter Section -->
-@if(Auth::user()->role == 'Admin')
 <div class="filter-bar">
+    @if(Auth::user()->role == 'Admin' || Auth::user()->role == 'HR')
     <!-- User Filter -->
     <select id="userFilter" class="form-control">
         <option value="">-- Filter by User --</option>
@@ -113,6 +113,7 @@
             <option value="{{ $user->name }}">{{ $user->name }}</option>
         @endforeach
     </select>
+    @endif
 
     @if(!request()->is('admin/task-today')) 
     <!-- Date Filter -->
@@ -120,7 +121,7 @@
     <input type="text" id="toDate" class="form-control" placeholder="To Date">
     @endif
 </div>
-@endif
+
 
 <div class="card">
     <div class="card-header">Task List</div>
@@ -132,7 +133,7 @@
                     <tr>
                         <th width="10"></th>
                         <th>SL</th>
-                        <th>Name</th>
+                        <th>Task Details</th>
                         <th class="user-column">User</th>
                         <th class="date-column">Assign Date</th> <!-- Marked for filtering -->
                         <th>Assign By</th>
@@ -149,7 +150,7 @@
                         <tr>
                             <td></td>
                             <td>{{ $loop->iteration }}</td>
-                            <td>{{ $data->name ?? '' }}</td>
+                            <td>{!! $data->name ?? '' !!}</td>
                             <td class="user-column">{{ $data->userData->name ?? '' }}</td>
                             <td class="date-column">{{ $data->assign_date ?? '' }}</td> <!-- Marked for filtering -->
                             <td>{{ $data->assignData->name ?? '' }}</td>
