@@ -85,7 +85,7 @@
                         <tr>
                             <td></td>
                             <td>{{ $loop->iteration }}</td>
-                            <td>{{ $data->name ?? '' }}</td>
+                            <td>{!! $data->name ?? '' !!}</td>
                             <td>{{ $data->userData->name ?? '' }}</td>
                             <td class="assign-to-column">{{ $data->assignData->name ?? '' }}</td>
                             <td>{{ $data->created_at ?? '' }}</td>

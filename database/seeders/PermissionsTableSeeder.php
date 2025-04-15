@@ -26,6 +26,7 @@ class PermissionsTableSeeder extends Seeder
             ['title' => 'user_show'],
             ['title' => 'user_delete'],
             ['title' => 'user_access'],
+            ['title' => 'user_active_inactive'],
             ['title' => 'profile_password_edit'],
             ['title' => 'category_access'],
             ['title' => 'category_create'],

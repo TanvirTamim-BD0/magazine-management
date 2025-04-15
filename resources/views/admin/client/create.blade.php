@@ -58,8 +58,8 @@
 
 
             <div class="form-group">
-                <label class="required" for="phone">Phone</label>
-                <input class="form-control {{ $errors->has('phone') ? 'is-invalid' : '' }}" type="text" name="phone" id="phone" value="{{ old('phone', '') }}" required>
+                <label for="phone">Phone</label>
+                <input class="form-control {{ $errors->has('phone') ? 'is-invalid' : '' }}" type="text" name="phone" id="phone" value="{{ old('phone', '') }}">
             </div>
 
             <div class="form-group">

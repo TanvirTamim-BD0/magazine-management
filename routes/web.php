@@ -27,6 +27,9 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     // Users
     Route::delete('users/destroy', 'UsersController@massDestroy')->name('users.massDestroy');
     Route::resource('users', 'UsersController');
+    Route::get('user-active/{id}', [App\Http\Controllers\Admin\UsersController::class, 'userActive'])->name('user-active');
+    Route::get('user-inactive/{id}', [App\Http\Controllers\Admin\UsersController::class, 'userInactive'])->name('user-inactive');
+
     Route::resource('category', 'CategoryController');
     Route::resource('company', 'CompanyController');
     Route::resource('designation', 'DesignationController');

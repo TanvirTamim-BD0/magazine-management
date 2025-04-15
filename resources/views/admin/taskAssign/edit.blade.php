@@ -53,8 +53,8 @@
             @csrf
             
             <div class="form-group">
-                <label class="required" for="name">Name</label>
-                <input class="form-control {{ $errors->has('name') ? 'is-invalid' : '' }}" type="text" name="name" id="name" value="{{ $taskAssignData->name }}" required>
+                <label class="required" for="remark">Task Details</label>
+                <textarea class="form-control {{ $errors->has('remark') ? 'is-invalid' : '' }}" name="name" id="description">{{ $taskData->name }} </textarea>
             </div>
 
             <div class="form-group">

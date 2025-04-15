@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('tasks', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('user_id')->nullable();
-            $table->string('name')->nullable();
+            $table->text('name')->nullable();
             $table->string('assign_date')->nullable();
             $table->string('assign_by')->nullable();
             $table->string('deadline')->nullable();

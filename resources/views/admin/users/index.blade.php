@@ -37,6 +37,7 @@
                         <th>
                             {{ trans('cruds.user.fields.roles') }}
                         </th>
+                        <th>Status</th>
                         <th>
                             &nbsp;
                         </th>
@@ -65,7 +66,29 @@
                                     <span class="badge badge-info">{{ $item->title }}</span>
                                 @endforeach
                             </td>
+
                             <td>
+                                @if($user->status == 'Active')
+                                    <span class="badge badge-success">Active</span>
+                                @else
+                                    <span class="badge badge-danger">Inactive</span> 
+                                @endif
+                            </td>
+
+                            <td>
+
+                                @can('user_active_inactive')
+                                @if($user->status == 'Active')
+                                    <a class="btn btn-xs btn-danger" href="{{ route('admin.user-inactive',$user->id) }}">
+                                        InActive
+                                    </a>
+                                @else
+                                <a class="btn btn-xs btn-success" href="{{ route('admin.user-active',$user->id) }}">
+                                        Active
+                                    </a>
+                                @endif
+                                @endcan
+
                                 @can('user_show')
                                     <a class="btn btn-xs btn-primary" href="{{ route('admin.users.show', $user->id) }}">
                                         {{ trans('global.view') }}

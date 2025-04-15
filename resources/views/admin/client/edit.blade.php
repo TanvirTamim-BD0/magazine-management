@@ -59,8 +59,8 @@
 
 
             <div class="form-group">
-                <label class="required" for="phone">Phone</label>
-                <input class="form-control {{ $errors->has('phone') ? 'is-invalid' : '' }}" type="text" name="phone" id="phone" value="{{$clientData->phone}}" required>
+                <label for="phone">Phone</label>
+                <input class="form-control {{ $errors->has('phone') ? 'is-invalid' : '' }}" type="text" name="phone" id="phone" value="{{$clientData->phone}}">
             </div>
 
             <div class="form-group">

@@ -57,9 +57,13 @@
                     </li>
                 @endif
 
-
+                <li style="font-size: 16px; color: blue; font-weight: bold;">{{Auth::user()->name}}</li>
             </ul>
+
+            <h6></h6>
+            <h6></h6>
         </header>
+
 
         <div class="c-body">
             <main class="c-main">

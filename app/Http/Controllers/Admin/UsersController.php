@@ -61,7 +61,7 @@ class UsersController extends Controller
     }
 
     public function update(UpdateUserRequest $request, User $user)
-    {
+    {   
         $user->update($request->all());
         $user->roles()->sync($request->input('roles', []));
 
@@ -98,4 +98,23 @@ class UsersController extends Controller
 
         return response(null, Response::HTTP_NO_CONTENT);
     }
+
+    //To active user...
+    public function userActive($id)
+    {
+        $user = User::where('id',$id)->first();
+        $user->status = 'Active';
+        $user->save();
+        return redirect()->route('admin.users.index')->with('message','Successfully User Active');
+    }
+    
+    //To active user...
+    public function userInactive($id)
+    {
+        $user = User::where('id',$id)->first();
+        $user->status = 'InActive';
+        $user->save();
+        return redirect()->route('admin.users.index')->with('error','User InActive');
+    }
+
 }
