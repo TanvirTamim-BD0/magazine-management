@@ -54,7 +54,17 @@
             
             <div class="form-group">
                 <label class="required" for="remark">Task Details</label>
-                <textarea class="form-control {{ $errors->has('remark') ? 'is-invalid' : '' }}" name="name" id="description">{{ $taskData->name }} </textarea>
+                <textarea class="form-control {{ $errors->has('name') ? 'is-invalid' : '' }}" name="name" id="description">{{ $taskAssignData->name }} </textarea>
+            </div>
+
+            <div class="form-group">
+                    <label for="task_category_id">Task Category</label>
+                        <select class="form-control select2 {{ $errors->has('task_category_id') ? 'is-invalid' : '' }}" name="task_category_id">
+                            <option selected disabled></option>
+                            @foreach($taskCategoryData as $category)
+                            <option value="{{$category->id}}" {{$category->id == $taskAssignData->task_category_id ? 'selected' : ''}} >{{$category->name}}</option>
+                            @endforeach
+                        </select>
             </div>
 
             <div class="form-group">

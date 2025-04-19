@@ -48,6 +48,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::post('client-data-export-area-filter', [App\Http\Controllers\Admin\ClientController::class, 'areaFilter'])->name('area.filter');
     
     Route::resource('task', 'TaskController');
+    Route::resource('task-category', 'TaskCategoryController');
     Route::get('task-completed/{id}', [App\Http\Controllers\Admin\TaskController::class, 'taskCompleted'])->name('task.completed');
 
     Route::get('task-monthly', [App\Http\Controllers\Admin\TaskController::class, 'monthly'])->name('task.monthly');

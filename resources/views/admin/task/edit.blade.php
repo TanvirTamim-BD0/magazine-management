@@ -58,6 +58,16 @@
             </div>
 
             <div class="form-group">
+                    <label for="task_category_id">Task Category</label>
+                        <select class="form-control select2 {{ $errors->has('task_category_id') ? 'is-invalid' : '' }}" name="task_category_id">
+                            <option selected disabled></option>
+                            @foreach($taskCategoryData as $category)
+                            <option value="{{$category->id}}" {{$category->id == $taskData->task_category_id ? 'selected' : ''}} >{{$category->name}}</option>
+                            @endforeach
+                        </select>
+            </div>
+
+            <div class="form-group">
                     <label class="required" for="assign_by">Assign By</label>
                         <select class="form-control select2 {{ $errors->has('assign_by') ? 'is-invalid' : '' }}" name="assign_by" required>
                             <option selected disabled></option>

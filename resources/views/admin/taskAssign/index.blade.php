@@ -18,17 +18,14 @@
         border-radius: 8px;
         padding: 10px;
     }
-    /* Filter Bar Styling */
     .filter-bar {
         margin-bottom: 15px;
         display: flex;
-        justify-content: center; /* Centering filter bar */
+        justify-content: center;
         align-items: center;
         gap: 15px;
         flex-wrap: wrap;
     }
-
-    /* User Filter Styling */
     .filter-bar select,
     .filter-bar input[type="text"] {
         flex: 1;
@@ -38,7 +35,6 @@
         border: 1px solid #ccc;
         font-size: 14px;
     }
-
 </style>
 
 @can('task_assign_create')
@@ -49,12 +45,21 @@
     </div>
 @endcan
 
-@if(Auth::user()->role == 'Admin')
+@if(Auth::user()->role == 'Admin' || Auth::user()->role == 'HR')
 <div class="filter-bar">
+    <!-- Assign To Filter -->
     <select id="assignToFilter" class="form-control">
         <option value="">-- Filter by Assign To --</option>
         @foreach($users as $user)
             <option value="{{ $user->name }}">{{ $user->name }}</option>
+        @endforeach
+    </select>
+
+    <!-- Task Category Filter -->
+    <select id="taskCategoryFilter" class="form-control">
+        <option value="">-- Filter by Category --</option>
+        @foreach($taskCategories as $category)
+            <option value="{{ $category->name }}">{{ $category->name }}</option>
         @endforeach
     </select>
 </div>
@@ -69,9 +74,10 @@
                     <tr>
                         <th width="10"></th>
                         <th>SL</th>
-                        <th>Name</th>
+                        <th style="width: 20%">Name</th>
                         <th>Assign By</th>
-                        <th>Assign To</th>
+                        <th class="assign-to-column">Assign To</th>
+                        <th class="category-column">Task Category</th>
                         <th>Assign Date</th>
                         <th>Deadline</th>
                         <th>Remark</th>
@@ -85,9 +91,10 @@
                         <tr>
                             <td></td>
                             <td>{{ $loop->iteration }}</td>
-                            <td>{!! $data->name ?? '' !!}</td>
+                            <td style="width: 20%">{!! $data->name ?? '' !!}</td>
                             <td>{{ $data->userData->name ?? '' }}</td>
                             <td class="assign-to-column">{{ $data->assignData->name ?? '' }}</td>
+                            <td class="category-column">{{ $data->taskCategoryData->name ?? '' }}</td>
                             <td>{{ $data->created_at ?? '' }}</td>
                             <td>{{ $data->deadline ?? '' }}</td>
                             <td>{!! $data->remark ?? '' !!}</td>
@@ -122,6 +129,8 @@
                                 @endcan
                             </td>
                         </tr>
+
+                        <!-- Reply Comment Modal -->
                         <div class="modal fade" id="replyComment{{ $data->id }}" tabindex="-1" role="dialog">
                             <div class="modal-dialog" role="document">
                                 <div class="modal-content">
@@ -158,12 +167,23 @@
 $(function () {
     let table = $('.datatable').DataTable();
 
+    // Assign To Filter
     $('#assignToFilter').on('change', function () {
-        let assignToFilter = $(this).val().toLowerCase();
+        let filterVal = $(this).val().toLowerCase();
         table.rows().every(function () {
             let row = $(this.node());
             let assignTo = row.find('.assign-to-column').text().toLowerCase();
-            row.toggle(assignToFilter === '' || assignTo === assignToFilter);
+            row.toggle(filterVal === '' || assignTo.includes(filterVal));
+        });
+    });
+
+    // Task Category Filter
+    $('#taskCategoryFilter').on('change', function () {
+        let filterVal = $(this).val().toLowerCase();
+        table.rows().every(function () {
+            let row = $(this.node());
+            let category = row.find('.category-column').text().toLowerCase();
+            row.toggle(filterVal === '' || category.includes(filterVal));
         });
     });
 });

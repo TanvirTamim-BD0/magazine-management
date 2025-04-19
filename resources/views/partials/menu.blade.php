@@ -180,6 +180,17 @@
                         </li>
                     @endcan
 
+                    @can('category_access')
+                        <li class="c-sidebar-nav-item">
+                            <a href="{{ route("admin.task-category.index") }}" class="c-sidebar-nav-link {{ request()->is("admin/task-category") || request()->is("admin/task-category/*") ? "c-active" : "" }}">
+                                <i class="fa fa-circle-thin c-sidebar-nav-icon">
+
+                                </i>
+                                Task Category
+                            </a>
+                        </li>
+                    @endcan
+
                 </ul>
             </li>
             @endcan

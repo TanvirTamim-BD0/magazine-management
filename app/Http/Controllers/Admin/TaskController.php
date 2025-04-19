@@ -8,6 +8,7 @@ use App\Models\Task;
 use App\Models\User;
 use Auth;
 use Carbon\Carbon;
+use App\Models\TaskCategory;
 
 class TaskController extends Controller
 {
@@ -20,14 +21,15 @@ class TaskController extends Controller
             $taskData = Task::where('user_id',Auth::user()->id)->orderBy('id', 'desc')->get();
             $users = User::orderBy('id','desc')->get();
         }
-
-        return view('admin.task.index',compact('taskData','users'));
+        $taskCategories = TaskCategory::all();
+        return view('admin.task.index',compact('taskData','users','taskCategories'));
     }
 
     public function create()
     {   
         $userData = User::all();
-        return view('admin.task.create',compact('userData'));
+        $taskCategoryData = TaskCategory::all();
+        return view('admin.task.create',compact('userData','taskCategoryData'));
     }
 
     public function store(Request $request)
@@ -51,7 +53,8 @@ class TaskController extends Controller
     {   
         $taskData = Task::where('id',$id)->first();
         $userData = User::all();
-        return view('admin.task.edit',compact('taskData','userData'));
+        $taskCategoryData = TaskCategory::all();
+        return view('admin.task.edit',compact('taskData','userData','taskCategoryData'));
     }
 
     public function update(Request $request,$id){

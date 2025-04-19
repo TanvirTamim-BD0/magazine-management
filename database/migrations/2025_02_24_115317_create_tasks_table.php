@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('tasks', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('user_id')->nullable();
+            $table->unsignedBigInteger('task_category_id')->nullable();
             $table->text('name')->nullable();
             $table->string('assign_date')->nullable();
             $table->string('assign_by')->nullable();
@@ -23,6 +24,7 @@ return new class extends Migration
             $table->text('admin_comment')->nullable();
             $table->string('status')->default('Pending');
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('task_category_id')->references('id')->on('task_categories')->onDelete('cascade');
             $table->timestamp('created_at')->default(DB::raw('CURRENT_TIMESTAMP'));
             $table->timestamp('updated_at')->default(DB::raw('CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP'));
         });

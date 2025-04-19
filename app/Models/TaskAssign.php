@@ -11,6 +11,7 @@ class TaskAssign extends Model
 
     protected $fillable = [
         'user_id',
+        'task_category_id',
         'name',
         'assign_to',
         'deadline',
@@ -27,6 +28,11 @@ class TaskAssign extends Model
     public function assignData()
     {
         return $this->belongsTo(User::class,'assign_to');
+    }
+
+    public function taskCategoryData()
+    {
+        return $this->belongsTo(TaskCategory::class,'task_category_id');
     }
 
 }

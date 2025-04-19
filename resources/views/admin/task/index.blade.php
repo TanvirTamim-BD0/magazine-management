@@ -27,13 +27,12 @@
     .filter-bar {
         margin-bottom: 15px;
         display: flex;
-        justify-content: center; /* Centering filter bar */
+        justify-content: center;
         align-items: center;
         gap: 15px;
         flex-wrap: wrap;
     }
 
-    /* User Filter Styling */
     .filter-bar select,
     .filter-bar input[type="text"] {
         flex: 1;
@@ -44,18 +43,6 @@
         font-size: 14px;
     }
 
-    /* Datepicker (From Date and To Date) */
-    .filter-bar input[type="text"] {
-        max-width: 220px;
-        padding: 10px;
-        border-radius: 6px;
-        border: 1px solid #ccc;
-        font-size: 14px;
-        background-color: #fff;
-        color: #333;
-    }
-
-    /* jQuery UI Datepicker Basic Style */
     .ui-datepicker {
         font-size: 14px;
         background-color: #fff;
@@ -106,22 +93,29 @@
 <!-- Filter Section -->
 <div class="filter-bar">
     @if(Auth::user()->role == 'Admin' || Auth::user()->role == 'HR')
-    <!-- User Filter -->
-    <select id="userFilter" class="form-control">
-        <option value="">-- Filter by User --</option>
-        @foreach($users as $user)
-            <option value="{{ $user->name }}">{{ $user->name }}</option>
+        <!-- User Filter -->
+        <select id="userFilter" class="form-control">
+            <option value="">-- Filter by User --</option>
+            @foreach($users as $user)
+                <option value="{{ $user->name }}">{{ $user->name }}</option>
+            @endforeach
+        </select>
+    @endif
+
+    <!-- Task Category Filter -->
+    <select id="categoryFilter" class="form-control">
+        <option value="">-- Filter by Category --</option>
+        @foreach($taskCategories as $category)
+            <option value="{{ $category->name }}">{{ $category->name }}</option>
         @endforeach
     </select>
-    @endif
 
     @if(!request()->is('admin/task-today')) 
-    <!-- Date Filter -->
-    <input type="text" id="fromDate" class="form-control" placeholder="From Date">
-    <input type="text" id="toDate" class="form-control" placeholder="To Date">
+        <!-- Date Filter -->
+        <input type="text" id="fromDate" class="form-control" placeholder="From Date">
+        <input type="text" id="toDate" class="form-control" placeholder="To Date">
     @endif
 </div>
-
 
 <div class="card">
     <div class="card-header">Task List</div>
@@ -135,8 +129,9 @@
                         <th>SL</th>
                         <th>Task Details</th>
                         <th class="user-column">User</th>
-                        <th class="date-column">Assign Date</th> <!-- Marked for filtering -->
+                        <th class="date-column">Assign Date</th>
                         <th>Assign By</th>
+                        <th class="category-column">Task Category</th>
                         <th>Deadline</th>
                         <th>Priority</th>
                         <th>Remark</th>
@@ -152,8 +147,9 @@
                             <td>{{ $loop->iteration }}</td>
                             <td>{!! $data->name ?? '' !!}</td>
                             <td class="user-column">{{ $data->userData->name ?? '' }}</td>
-                            <td class="date-column">{{ $data->assign_date ?? '' }}</td> <!-- Marked for filtering -->
+                            <td class="date-column">{{ $data->assign_date ?? '' }}</td>
                             <td>{{ $data->assignData->name ?? '' }}</td>
+                            <td class="category-column">{{ $data->taskCategoryData->name ?? '' }}</td>
                             <td>{{ $data->deadline ?? '' }}</td>
                             <td>{{ $data->priority ?? '' }}</td>
                             <td>{!! $data->remark ?? '' !!}</td>
@@ -166,7 +162,6 @@
                                 @endif
                             </td>
                             <td>
-
                                 @if(Auth::user()->id == $data->user_id && $data->status == 'Pending')
                                     <a href="{{ route('admin.task.completed', $data->id) }}" class="btn btn-sm btn-success">
                                         Completed <i class="fa fa-arrow-up"></i>
@@ -178,21 +173,15 @@
                                     </button>
                                 @endcan
 
-
                                 @can('task_edit')
-                                @if(Auth::user()->role == 'Admin' || Auth::user()->role == 'HR')
-                                <a class="btn btn-xs btn-info" href="{{ route('admin.task.edit', $data->id) }}">
-                                        Edit
-                                    </a>
-                                @else
-                                @if(\Carbon\Carbon::parse($data->created_at)->isToday())
-                                    <a class="btn btn-xs btn-info" href="{{ route('admin.task.edit', $data->id) }}">
-                                        Edit
-                                    </a>
-                                @endif
-                                @endif
+                                    @if(Auth::user()->role == 'Admin' || Auth::user()->role == 'HR')
+                                        <a class="btn btn-xs btn-info" href="{{ route('admin.task.edit', $data->id) }}">Edit</a>
+                                    @else
+                                        @if(\Carbon\Carbon::parse($data->created_at)->isToday())
+                                            <a class="btn btn-xs btn-info" href="{{ route('admin.task.edit', $data->id) }}">Edit</a>
+                                        @endif
+                                    @endif
                                 @endcan
-
 
                                 @can('task_delete')
                                     <form action="{{ route('admin.task.destroy', $data->id) }}" method="POST" onsubmit="return confirm('{{ trans('global.areYouSure') }}');" style="display: inline-block;">
@@ -204,33 +193,33 @@
                             </td>
                         </tr>
 
-                    <!-- Admin Comment Modal -->
-                    <div class="modal fade" id="adminComment{{ $data->id }}" tabindex="-1" role="dialog" aria-labelledby="adminCommentLabel" aria-hidden="true">
-                        <div class="modal-dialog" role="document">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h5 class="modal-title" id="adminCommentLabel">Admin Comment</h5>
-                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                        <span aria-hidden="true">&times;</span>
-                                    </button>
-                                </div>
-                                <form method="POST" action="{{ route('admin.admin.comment', $data->id) }}" enctype="multipart/form-data">
-                                    @csrf
-                                    @method('PUT')
-                                    <div class="modal-body">
-                                        <div class="form-group">
-                                            <label for="admin_comment">Admin Comment</label>
-                                            <textarea class="form-control" type="text" name="admin_comment">{{ $data->admin_comment }}</textarea>
+                        <!-- Admin Comment Modal -->
+                        <div class="modal fade" id="adminComment{{ $data->id }}" tabindex="-1" role="dialog" aria-labelledby="adminCommentLabel" aria-hidden="true">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="adminCommentLabel">Admin Comment</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <form method="POST" action="{{ route('admin.admin.comment', $data->id) }}" enctype="multipart/form-data">
+                                        @csrf
+                                        @method('PUT')
+                                        <div class="modal-body">
+                                            <div class="form-group">
+                                                <label for="admin_comment">Admin Comment</label>
+                                                <textarea class="form-control" type="text" name="admin_comment">{{ $data->admin_comment }}</textarea>
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                        <button type="submit" class="btn btn-primary">Submit</button>
-                                    </div>
-                                </form>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                            <button type="submit" class="btn btn-primary">Submit</button>
+                                        </div>
+                                    </form>
+                                </div>
                             </div>
                         </div>
-                    </div>
                     @endforeach
                 </tbody>
             </table>
@@ -251,43 +240,45 @@ $(function () {
         pageLength: 100,
     });
 
-    // User Filter (Search only in the User column)
+    // User Filter
     $('#userFilter').on('change', function () {
         let selectedUser = $(this).val().toLowerCase();
         table.columns('.user-column').search(selectedUser).draw();
     });
 
-    // Datepicker for From Date and To Date
+    // Task Category Filter
+    $('#categoryFilter').on('change', function () {
+        let selectedCategory = $(this).val().toLowerCase();
+        table.columns('.category-column').search(selectedCategory).draw();
+    });
+
+    // Datepicker
     $('#fromDate, #toDate').datepicker({
-        dateFormat: 'yy-mm-dd', // Set the date format
+        dateFormat: 'yy-mm-dd',
         changeMonth: true,
         changeYear: true
     });
 
-    // Date Range Filter (Search only in the Assign Date column)
+    // Date Filter
     $.fn.dataTable.ext.search.push(function(settings, data, dataIndex) {
         let fromDate = $('#fromDate').val();
         let toDate = $('#toDate').val();
-        let assignDate = data[4]; // The "Assign Date" column (Index 4)
+        let assignDate = data[4];
 
         if (fromDate && toDate) {
-            let dateParts = assignDate.split('-'); // Assuming YYYY-MM-DD format
+            let dateParts = assignDate.split('-');
             let formattedAssignDate = new Date(dateParts[0], dateParts[1] - 1, dateParts[2]);
-
             let startDate = new Date(fromDate);
             let endDate = new Date(toDate);
-
             return formattedAssignDate >= startDate && formattedAssignDate <= endDate;
         }
         return true;
     });
 
-    // Apply Date Filter when date inputs change
     $('#fromDate, #toDate').on('change', function () {
         table.draw();
     });
 
-    // Adjust table when switching tabs
     $('a[data-toggle="tab"]').on('shown.bs.tab click', function () {
         $($.fn.dataTable.tables(true)).DataTable().columns.adjust();
     });

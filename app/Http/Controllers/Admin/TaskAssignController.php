@@ -9,6 +9,7 @@ use App\Models\User;
 use Auth;
 use Carbon\Carbon;
 use Karim007\LaravelSslwirlessSms\Facade\SslWirlessSms;
+use App\Models\TaskCategory;
 
 class TaskAssignController extends Controller
 {
@@ -21,8 +22,9 @@ class TaskAssignController extends Controller
             $taskAssignData = TaskAssign::where('assign_to',Auth::user()->id)->orderBy('id', 'desc')->get();
             $users = User::orderBy('id','desc')->get();
         }
+        $taskCategories = TaskCategory::all();
 
-        return view('admin.taskAssign.index',compact('taskAssignData','users'));
+        return view('admin.taskAssign.index',compact('taskAssignData','users','taskCategories'));
     }
 
     public function IAssignedTask()
@@ -42,7 +44,8 @@ class TaskAssignController extends Controller
     public function create()
     {   
         $userData = User::all();
-        return view('admin.taskAssign.create',compact('userData'));
+        $taskCategoryData = TaskCategory::all();
+        return view('admin.taskAssign.create',compact('userData','taskCategoryData'));
     }
 
     public function store(Request $request)
@@ -61,7 +64,7 @@ class TaskAssignController extends Controller
             $customer_smsId = uniqid();
             SslWirlessSms::singleSms($phone_number,$messageBody,$customer_smsId);
 
-            return redirect()->back()->with('message','Successfully Task Assign Created');
+            return redirect()->route('admin.assign-task.index')->with('message','Successfully Task Assign Created');
         }else{
             return redirect()->back();
         }
@@ -71,7 +74,8 @@ class TaskAssignController extends Controller
     {   
         $taskAssignData = TaskAssign::where('id',$id)->first();
         $userData = User::all();
-        return view('admin.taskAssign.edit',compact('taskAssignData','userData'));
+        $taskCategoryData = TaskCategory::all();
+        return view('admin.taskAssign.edit',compact('taskAssignData','userData','taskCategoryData'));
     }
 
     public function update(Request $request,$id){
@@ -80,7 +84,7 @@ class TaskAssignController extends Controller
     
         $taskAssignData = TaskAssign::find($id);
         if($taskAssignData->update($data)){
-            return redirect()->back()->with('message','Successfully Task Assign Updated');
+            return redirect()->route('admin.assign-task.index')->with('message','Successfully Task Assign Updated');
         }else{
             return redirect()->back()->with('error','Error !! Update Failed');;
         }
