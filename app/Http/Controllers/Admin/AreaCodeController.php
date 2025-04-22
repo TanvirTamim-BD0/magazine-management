@@ -11,7 +11,7 @@ class AreaCodeController extends Controller
 {
     public function index()
     {   
-        $areaCodeData = AreaCode::orderBy('id','desc')->get();
+        $areaCodeData = AreaCode::orderBy('name', 'asc')->get();
         return view('admin.areaCode.index',compact('areaCodeData'));
     }
 

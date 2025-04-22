@@ -101,7 +101,8 @@ class TaskController extends Controller
             $taskData = Task::where('user_id',Auth::user()->id)->whereMonth('created_at', Carbon::now()->month)->orderBy('id', 'desc')->get();
             $users = User::orderBy('id','desc')->get();
         }
-        return view('admin.task.index',compact('taskData','users'));
+        $taskCategories = TaskCategory::all();
+        return view('admin.task.index',compact('taskData','users','taskCategories'));
     }
 
     public function today()
@@ -113,7 +114,8 @@ class TaskController extends Controller
             $taskData = Task::where('user_id',Auth::user()->id)->whereDate('created_at', Carbon::today())->orderBy('id', 'desc')->get();
             $users = User::orderBy('id','desc')->get();
         }
-        return view('admin.task.index',compact('taskData','users'));
+        $taskCategories = TaskCategory::all();
+        return view('admin.task.index',compact('taskData','users','taskCategories'));
     }
 
     public function pending()
@@ -125,7 +127,8 @@ class TaskController extends Controller
             $taskData = Task::where('user_id',Auth::user()->id)->where('status', 'Pending')->orderBy('id', 'desc')->get();
             $users = User::orderBy('id','desc')->get();
         }
-        return view('admin.task.index',compact('taskData','users'));
+        $taskCategories = TaskCategory::all();
+        return view('admin.task.index',compact('taskData','users','taskCategories'));
     }
 
     public function completed()
@@ -137,7 +140,8 @@ class TaskController extends Controller
             $taskData = Task::where('user_id',Auth::user()->id)->where('status', 'Completed')->orderBy('id', 'desc')->get();
             $users = User::orderBy('id','desc')->get();
         }
-        return view('admin.task.index',compact('taskData','users'));
+        $taskCategories = TaskCategory::all();
+        return view('admin.task.index',compact('taskData','users','taskCategories'));
     }
 
     public function adminComment(Request $request,$id)

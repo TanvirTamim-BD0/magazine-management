@@ -18,9 +18,11 @@ class TaskAssignController extends Controller
         if(Auth::user()->role == 'Admin'){
             $taskAssignData = TaskAssign::orderBy('id','desc')->get();
         	$users = User::orderBy('id','desc')->get();
+            $taskCategories = TaskCategory::all();
         }else{
             $taskAssignData = TaskAssign::where('assign_to',Auth::user()->id)->orderBy('id', 'desc')->get();
             $users = User::orderBy('id','desc')->get();
+            $taskCategories = TaskCategory::all();
         }
         $taskCategories = TaskCategory::all();
 

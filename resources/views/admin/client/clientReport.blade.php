@@ -1,5 +1,6 @@
 @extends('layouts.admin')
 @section('content')
+
 <style>
     .container {
         background: #fff;
@@ -10,11 +11,15 @@
         margin: auto;
     }
 
-    .print-btn {
+    .btn-group {
         display: flex;
-        align-items: center;
+        gap: 10px;
         justify-content: center;
-        margin: 0 auto 20px;
+        margin-bottom: 20px;
+    }
+
+    .print-btn,
+    .word-btn {
         padding: 10px 15px;
         font-size: 16px;
         cursor: pointer;
@@ -24,8 +29,9 @@
         border-radius: 5px;
     }
 
-    .print-btn i {
-        margin-right: 8px;
+    .print-btn i,
+    .word-btn i {
+        margin-right: 6px;
     }
 
     .filter-form {
@@ -68,22 +74,18 @@
         color: #007bff;
     }
 
-    p {
-        margin: 0;
-        line-height: 1.4;
-    }
-
     @media print {
         @page {
             size: A4 landscape;
-            margin: 0;
+            margin: 10mm;
         }
 
         body * {
             visibility: hidden;
         }
 
-        .contact-list, .contact-list * {
+        .contact-list,
+        .contact-list * {
             visibility: visible;
         }
 
@@ -93,22 +95,31 @@
             left: 0;
             top: 0;
             width: 100%;
-            background: none;
-            border: none;
-            box-shadow: none;
         }
 
-        .print-btn, .filter-form {
-            display: none;
+        .btn-group,
+        .filter-form {
+            display: none !important;
+        }
+
+        .contact-item {
+            page-break-inside: avoid;
         }
     }
 </style>
 
 <div class="container">
-    <!-- Print Button -->
-    <button class="print-btn" onclick="window.print()">
-        <i class="fas fa-print"></i> Print
-    </button>
+
+    <!-- Action Buttons -->
+    <div class="btn-group">
+        <button class="print-btn" onclick="window.print()">
+            <i class="fas fa-print"></i> Print
+        </button>
+
+        <!-- <a href="{{ route('admin.contacts.downloadWord') }}" class="word-btn">
+            <i class="fas fa-file-word"></i> Download Word
+        </a> -->
+    </div>
 
     <!-- Filters -->
     <div class="filter-form">
@@ -152,13 +163,15 @@
                 <h5>To:</h5>
                 <p>
                     <strong>{{ $client->name ?? '' }}</strong><br>
-                    {{ $client->designationData->name ?? '' }}, {{ $client->companyData->name ?? '' }}<br>
+                    {{ $client->designationData->name ?? '' }}<br>
+                    {{ $client->companyData->name ?? '' }}<br>
                     {{ $client->address ?? '' }}
                 </p>
             </div>
         @endforeach
     </div>
 </div>
+
 @endsection
 
 @section('scripts')
@@ -186,11 +199,7 @@
                 const matchesCompany = filters.company.value === '' || item.dataset.company === filters.company.value;
                 const matchesArea = filters.area.value === '' || item.dataset.area === filters.area.value;
 
-                if (matchesCategory && matchesDesignation && matchesCompany && matchesArea) {
-                    item.style.display = '';
-                } else {
-                    item.style.display = 'none';
-                }
+                item.style.display = (matchesCategory && matchesDesignation && matchesCompany && matchesArea) ? '' : 'none';
             });
         }
     });

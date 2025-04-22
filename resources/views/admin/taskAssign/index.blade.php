@@ -74,7 +74,7 @@
                     <tr>
                         <th width="10"></th>
                         <th>SL</th>
-                        <th style="width: 20%">Name</th>
+                        <th>Name</th>
                         <th>Assign By</th>
                         <th class="assign-to-column">Assign To</th>
                         <th class="category-column">Task Category</th>
@@ -91,7 +91,7 @@
                         <tr>
                             <td></td>
                             <td>{{ $loop->iteration }}</td>
-                            <td style="width: 20%">{!! $data->name ?? '' !!}</td>
+                            <td>{!! $data->name ?? '' !!}</td>
                             <td>{{ $data->userData->name ?? '' }}</td>
                             <td class="assign-to-column">{{ $data->assignData->name ?? '' }}</td>
                             <td class="category-column">{{ $data->taskCategoryData->name ?? '' }}</td>

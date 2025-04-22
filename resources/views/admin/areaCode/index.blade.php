@@ -1,6 +1,6 @@
 @extends('layouts.admin')
 @section('content')
-@can('company_create')
+@can('area_create')
     <div style="margin-bottom: 10px;" class="row">
         <div class="col-lg-12">
             <a class="btn btn-success" href="{{ route('admin.area-code.create') }}">
@@ -19,7 +19,7 @@
             <table class=" table table-bordered table-striped table-hover datatable datatable-User">
                 <thead>
                     <tr>
-                        <th width="10">
+                        <th>
 
                         </th>
                         <th>
@@ -35,7 +35,7 @@
                 </thead>
                 <tbody>
                     @foreach($areaCodeData as $key => $data)
-                        <tr data-entry-id="{{ $data->id }}">
+                        <tr>
                             <td>
 
                             </td>
@@ -45,13 +45,13 @@
                             </td>
                             
                             <td>
-                                @can('company_edit')
+                                @can('area_edit')
                                     <a class="btn btn-xs btn-info" href="{{ route('admin.area-code.edit', $data->id) }}">
                                         Edit
                                     </a>
                                 @endcan
 
-                                @can('company_delete')
+                                @can('area_delete')
                                     <form action="{{ route('admin.area-code.destroy', $data->id) }}" method="POST" onsubmit="return confirm('{{ trans('global.areYouSure') }}');" style="display: inline-block;">
                                         <input type="hidden" name="_method" value="DELETE">
                                         <input type="hidden" name="_token" value="{{ csrf_token() }}">
@@ -80,7 +80,7 @@
 
   $.extend(true, $.fn.dataTable.defaults, {
     orderCellsTop: true,
-    order: [[ 1, 'desc' ]],
+    order: [[ 1, 'asc' ]],
     pageLength: 100,
   });
   let table = $('.datatable-User:not(.ajaxTable)').DataTable({ buttons: dtButtons })

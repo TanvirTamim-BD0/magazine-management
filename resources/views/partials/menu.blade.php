@@ -68,7 +68,7 @@
                         </li>
                     @endcan
 
-                    @can('company_access')
+                    @can('area_access')
                         <li class="c-sidebar-nav-item">
                             <a href="{{ route("admin.area-code.index") }}" class="c-sidebar-nav-link {{ request()->is("admin/area-code") || request()->is("admin/area-code/*") ? "c-active" : "" }}">
                                 <i class="fa fa-circle-thin c-sidebar-nav-icon">

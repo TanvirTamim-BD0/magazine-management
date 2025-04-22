@@ -46,6 +46,8 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
 
     Route::get('client-data-export', [App\Http\Controllers\Admin\ClientController::class, 'clientDataExport'])->name('client.data.export');
     Route::post('client-data-export-area-filter', [App\Http\Controllers\Admin\ClientController::class, 'areaFilter'])->name('area.filter');
+    Route::get('contacts/download-word', [App\Http\Controllers\Admin\ClientController::class, 'downloadWord'])->name('contacts.downloadWord');
+
     
     Route::resource('task', 'TaskController');
     Route::resource('task-category', 'TaskCategoryController');

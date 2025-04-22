@@ -10,6 +10,9 @@ use App\Models\Company;
 use Auth;
 use App\Models\AreaCode;
 use App\Models\Category;
+use PhpOffice\PhpWord\PhpWord;
+use PhpOffice\PhpWord\IOFactory;
+
 
 class ClientController extends Controller
 {
@@ -103,5 +106,52 @@ class ClientController extends Controller
         $clientData = Client::where('area_code',$request->area_code)->orderBy('id','desc')->get();
         return view('admin.client.clientReport',compact('clientData'));
     }
+
+
+    public function downloadWord()
+    {
+    // Get the client data, you can modify it as per your need
+    $clients = Client::with(['categoryData', 'designationData', 'companyData', 'areaCodeData'])
+        ->orderBy('name') // Optional: Alphabetical order
+        ->get();
+
+    // Initialize PhpWord
+    $phpWord = new PhpWord();
+    $section = $phpWord->addSection();
+
+    // Set the document's default font
+    $phpWord->setDefaultFontName('Arial');
+    $phpWord->setDefaultFontSize(12);
+
+    // Add a title or header
+    $section->addText("Client Information", ['bold' => true, 'size' => 14]);
+
+    // Loop through each client and add their details to the Word document
+    foreach ($clients as $client) {
+        // Fetch data for each client and set default if null
+        $name = $client->name ?? 'N/A';
+        $designation = $client->designationData->name ?? 'N/A';
+        $company = $client->companyData->name ?? 'N/A';
+        $address = $client->address ?? 'N/A';
+
+        // Add the client data as a formatted paragraph
+        $text = "To:\n" . $name . "\n" . $designation . ", " . $company . "\n" . $address . "\n\n";
+        
+        // Add text to the Word document
+        $section->addText($text);
+    }
+
+    // Save the Word file to a location within the public storage
+    $fileName = 'clients_' . time() . '.docx';
+    $filePath = storage_path($fileName);
+
+    // Write the content to the file
+    $objWriter = IOFactory::createWriter($phpWord, 'Word2007');
+    $objWriter->save($filePath);
+
+    // Return the file as a download and delete it after sending
+    return response()->download($filePath)->deleteFileAfterSend(true);
+    }
+    
 
 }
