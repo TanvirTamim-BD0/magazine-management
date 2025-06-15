@@ -47,6 +47,16 @@
             </div>
 
             <div class="form-group">
+                    <label for="country">Country</label>
+                        <select class="form-control select2 {{ $errors->has('country') ? 'is-invalid' : '' }}" name="country">
+                            <option selected disabled></option>
+                            @foreach($countryData as $country)
+                            <option value="{{$country->name}}">{{$country->name}}</option>
+                            @endforeach
+                        </select>
+            </div>
+
+            <div class="form-group">
                 <label class="required" for="address">Address</label>
                 <textarea class="form-control {{ $errors->has('address') ? 'is-invalid' : '' }}" type="text" name="address" required></textarea>
             </div>
@@ -59,7 +69,22 @@
 
             <div class="form-group">
                 <label for="phone">Phone</label>
-                <input class="form-control {{ $errors->has('phone') ? 'is-invalid' : '' }}" type="text" name="phone" id="phone" value="{{ old('phone', '') }}">
+                <input class="form-control {{ $errors->has('phone') ? 'is-invalid' : '' }}" type="number" name="phone" id="phone" value="{{ old('phone', '') }}">
+            </div>
+
+            <div class="form-group">
+                <label for="website">Website</label>
+                <input class="form-control {{ $errors->has('website') ? 'is-invalid' : '' }}" type="text" name="website" id="website" value="{{ old('website', '') }}">
+            </div>
+
+            <div class="form-group">
+                <label for="others_phone">Others Phone</label>
+                <input class="form-control {{ $errors->has('others_phone') ? 'is-invalid' : '' }}" type="text" name="others_phone" id="others_phone" value="{{ old('others_phone', '') }}">
+            </div>
+
+            <div class="form-group">
+                <label for="others_email">Others Email</label>
+                <input class="form-control {{ $errors->has('others_email') ? 'is-invalid' : '' }}" type="text" name="others_email" id="others_email" value="{{ old('others_email', '') }}">
             </div>
 
             <div class="form-group">

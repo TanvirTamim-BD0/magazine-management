@@ -16,11 +16,15 @@ class Client extends Model
         'designation_id',
         'company_id',
         'address',
+        'country',
+        'website',
         'email',
         'phone',
+        'others_phone',
+        'others_email',
         'area_code'
     ];
-
+    
     public function userData()
     {
         return $this->belongsTo(User::class,'user_id');

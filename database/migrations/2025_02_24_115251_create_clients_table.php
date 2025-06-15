@@ -19,8 +19,12 @@ return new class extends Migration
             $table->unsignedBigInteger('designation_id')->nullable();
             $table->unsignedBigInteger('company_id')->nullable();
             $table->string('address')->nullable();
+            $table->string('country')->nullable();
+            $table->string('website')->nullable();
             $table->string('email')->nullable();
             $table->string('phone')->nullable();
+            $table->string('others_phone')->nullable();
+            $table->string('others_email')->nullable();
             $table->unsignedBigInteger('area_code')->nullable();
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->foreign('designation_id')->references('id')->on('designations')->onDelete('cascade');

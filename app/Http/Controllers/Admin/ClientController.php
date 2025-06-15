@@ -12,7 +12,8 @@ use App\Models\AreaCode;
 use App\Models\Category;
 use PhpOffice\PhpWord\PhpWord;
 use PhpOffice\PhpWord\IOFactory;
-
+use Barryvdh\DomPDF\Facade\Pdf;
+use App\Models\Country;
 
 class ClientController extends Controller
 {
@@ -31,8 +32,9 @@ class ClientController extends Controller
     	$designationData = Designation::all();
     	$companyData = Company::all();
         $areaCodeData = AreaCode::all();
+        $countryData = Country::all();
         $categoryData = Category::all();
-        return view('admin.client.create',compact('designationData','companyData','areaCodeData','categoryData'));
+        return view('admin.client.create',compact('designationData','companyData','areaCodeData','categoryData','countryData'));
     }
 
     public function store(Request $request)
@@ -58,7 +60,8 @@ class ClientController extends Controller
     	$companyData = Company::all();
         $areaCodeData = AreaCode::all();
         $categoryData = Category::all();
-        return view('admin.client.edit',compact('clientData','designationData','companyData','areaCodeData','categoryData'));
+        $countryData = Country::all();
+        return view('admin.client.edit',compact('clientData','designationData','companyData','areaCodeData','categoryData','countryData'));
     }
 
     public function update(Request $request,$id){
@@ -106,6 +109,34 @@ class ClientController extends Controller
         $clientData = Client::where('area_code',$request->area_code)->orderBy('id','desc')->get();
         return view('admin.client.clientReport',compact('clientData'));
     }
+
+    public function downloadPdf(Request $request)
+    {
+    $query = Client::query();
+
+    if ($request->category) {
+        $query->whereHas('categoryData', fn($q) => $q->where('name', $request->category));
+    }
+
+    if ($request->designation) {
+        $query->whereHas('designationData', fn($q) => $q->where('name', $request->designation));
+    }
+
+    if ($request->company) {
+        $query->whereHas('companyData', fn($q) => $q->where('name', $request->company));
+    }
+
+    if ($request->area) {
+        $query->whereHas('areaCodeData', fn($q) => $q->where('name', $request->area));
+    }
+
+    $clientData = $query->get();
+
+    $pdf = PDF::loadView('admin.client.pdf', compact('clientData'))
+              ->setPaper('a4');
+
+    return $pdf->download('clients.pdf');
+}
 
 
     public function downloadWord()

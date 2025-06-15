@@ -29,6 +29,16 @@
         border-radius: 5px;
     }
 
+    .word-btn-pdf {
+        padding: 10px 15px;
+        font-size: 16px;
+        cursor: pointer;
+        background: #f53f3f;
+        color: white;
+        border: none;
+        border-radius: 5px;
+    }
+
     .print-btn i,
     .word-btn i {
         margin-right: 6px;
@@ -116,6 +126,11 @@
             <i class="fas fa-print"></i> Print
         </button>
 
+        <a id="pdf-download" class="word-btn-pdf" style="color: white;">
+            <i class="fas fa-file-pdf"></i> Download PDF
+        </a>
+
+
         <!-- <a href="{{ route('admin.contacts.downloadWord') }}" class="word-btn">
             <i class="fas fa-file-word"></i> Download Word
         </a> -->
@@ -162,9 +177,19 @@
                 data-area="{{ $client->areaCodeData->name ?? '' }}">
                 <h5>To:</h5>
                 <p>
-                    <strong>{{ $client->name ?? '' }}</strong><br>
+                    <strong>
+                        @if($client->name == 'Not Applicable')
+                        @else
+                        {{ $client->name ?? '' }}
+                        @endif
+                    </strong><br>
                     {{ $client->designationData->name ?? '' }}<br>
+
+                    @if($client->companyData->name == 'Not Applicable')
+                    @else
                     {{ $client->companyData->name ?? '' }}<br>
+                    @endif
+                    
                     {{ $client->address ?? '' }}
                 </p>
             </div>
@@ -203,5 +228,27 @@
             });
         }
     });
+
+
 </script>
+
+<script>
+    document.getElementById('pdf-download').addEventListener('click', function () {
+        const category = document.getElementById('filter-category').value;
+        const designation = document.getElementById('filter-designation').value;
+        const company = document.getElementById('filter-company').value;
+        const area = document.getElementById('filter-area').value;
+
+        const params = new URLSearchParams({
+            category,
+            designation,
+            company,
+            area
+        });
+
+        window.open(`{{ route('admin.contacts.downloadPdf') }}?` + params.toString());
+    });
+</script>
+
+
 @endsection

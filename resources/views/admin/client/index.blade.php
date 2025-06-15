@@ -66,10 +66,13 @@
                         <th>Category</th>
                         <th>Designation</th>
                         <th>Company</th>
+                        <th>Website</th>
                         <th>Address</th>
                         <th>Email</th>
                         <th>Phone</th>
+                        <th>Others Information</th>
                         <th>Area</th>
+                        <th>Country</th>
                         <th>Pending Magazine</th>
                         <th>&nbsp;</th>
                     </tr>
@@ -83,10 +86,16 @@
                             <td>{{ $data->categoryData->name ?? '' }}</td>
                             <td>{{ $data->designationData->name ?? '' }}</td>
                             <td>{{ $data->companyData->name ?? '' }}</td>
+                            <td>{{ $data->website ?? '' }}</td>                        
                             <td>{{ $data->address ?? '' }}</td>
                             <td>{{ $data->email ?? '' }}</td>
                             <td>{{ $data->phone ?? '' }}</td>
+                            <td>
+                                Others Phone : {{ $data->others_phone ?? '' }}<br>
+                                Others Email : {{ $data->others_email ?? '' }}
+                            </td>
                             <td>{{ $data->areaCodeData->name ?? '' }}</td>
+                            <td>{{ $data->country ?? '' }}</td>
 
                             @php
                                 $getPendingMagazines = App\Models\MagazineSend::getPendingMagazine($data->id);
